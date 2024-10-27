@@ -1,0 +1,54 @@
+@import "../styles/variables/";
+@import "../styles/mixins";
+
+.appointment-form {
+  display: flex;
+  width: 300px;
+  flex-direction: column;
+  padding: 25px;
+  font-size: 16px;
+  border: 1px solid $input-border;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+
+  h2 {
+    margin: 30px 20px;
+    margin-top: 0;
+  }
+
+  select {
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid $input-border;
+  }
+
+  button {
+    margin: 10px 0;
+    min-width: 85%;
+    padding: 10px;
+    font-size: 18px;
+    color: white;
+    background-color: $primary-color;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 16px;
+
+    &:hover {
+      background-color: darken($primary-color, 10%);
+    }
+  }
+  .date-time {
+    display: flex;
+    justify-content: space-between;
+
+    input,
+    select {
+      margin: 10px 0;
+      padding: 5px;
+      border-radius: 5px;
+      border: 1px solid $input-border;
+    }
+  }
+}

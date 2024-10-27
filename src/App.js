@@ -1,25 +1,49 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import Dashboard from "./components/Dashboard";
+import Login from "./components/Login";
+import Logout from "./components/Logout";
+import Signup from "./components/Signup";
 
-function App() {
+import PrivateRoute from "./routes/PrivateRoute";
+import { Route, Routes, Navigate } from "react-router-dom";
+import PublicRoute from "./routes/PublicRoute";
+import { useAuth } from "./context/AuthProvider";
+import Navbar from "./components/Navbar";
+
+const App = () => {
+  const auth = useAuth();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <main className="App">
+      {auth.isAuthenticated && <Navbar />}
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <PublicRoute>
+              <Login />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/signup"
+          element={
+            <PublicRoute>
+              <Signup />
+            </PublicRoute>
+          }
+        />
+
+        <Route
+          path="/dashboard"
+          element={
+            <PrivateRoute>
+              <Dashboard />
+            </PrivateRoute>
+          }
+        />
+      </Routes>
+    </main>
   );
-}
+};
 
 export default App;

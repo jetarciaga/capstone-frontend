@@ -1,0 +1,4 @@
+@mixin input-focus {
+  border-color: $primary-color;
+  outline: none;
+}
