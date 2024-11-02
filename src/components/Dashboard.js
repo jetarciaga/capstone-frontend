@@ -27,7 +27,6 @@ const Dashboard = () => {
     <div>
       <h1>Dashboard</h1>
       <Appointment />
-      <Calendar />
       {data ? <pre>{JSON.stringify(data, null, 2)}</pre> : "Loading..."}
     </div>
   );

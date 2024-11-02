@@ -1,15 +1,17 @@
 import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Signup.scss";
 
 const Signup = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
+    firstname: "",
+    lastname: "",
     birthday: "",
     email: "",
     password: "",
-    confirmPassword: "",
+    password2: "",
   });
 
   const handleChange = (e) => {
@@ -25,9 +27,10 @@ const Signup = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8000/auth/users",
+        "http://localhost:8000/auth/users/",
         formData
       );
+      navigate("/");
       console.log("Signup success:", response.data);
     } catch (error) {
       console.log("Signup error:", error.response);
@@ -50,16 +53,16 @@ const Signup = () => {
           <input
             className="full-width"
             type="text"
-            name="firstName"
-            value={formData.firstName}
+            name="firstname"
+            value={formData.firstname}
             onChange={handleChange}
             placeholder="First name"
           />
           <input
             className="full-width"
             type="text"
-            name="lastName"
-            value={formData.lastName}
+            name="lastname"
+            value={formData.lastname}
             onChange={handleChange}
             placeholder="Last name"
           />
@@ -85,25 +88,24 @@ const Signup = () => {
             />
           </div>
         </div>
-        <div className="password-group full-width">
-          <input
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            placeholder="Password"
-          />
-          <input
-            type="password"
-            name="confirmPassword"
-            value={formData.confirmPassword}
-            onChange={handleChange}
-            placeholder="Confirm password"
-          />
-        </div>
-        <div className="button-container">
-          <button type="submit">Create Account</button>
-        </div>
+        <input
+          type="password"
+          name="password"
+          value={formData.password}
+          onChange={handleChange}
+          placeholder="Password"
+        />
+        <input
+          type="password"
+          name="password2"
+          value={formData.password2}
+          onChange={handleChange}
+          placeholder="Confirm password"
+        />
+        <button type="submit">Create Account</button>
+        <Link to="/" className="account-login">
+          Already have an account?
+        </Link>
       </form>
     </div>
   );

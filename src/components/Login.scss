@@ -11,7 +11,7 @@
   background-size: 500px;
 
   .title {
-    margin: 20px auto;
+    margin: 10px auto;
     background-color: rgba(255, 255, 255, 0.5);
     padding: 20px;
     border-radius: 5px;
@@ -19,14 +19,14 @@
 
   h1 {
     text-transform: uppercase;
-    font-size: 2.25em;
+    font-size: 3em;
     letter-spacing: 0.002rem;
     margin: 0;
     // color: #dc0d0d;
   }
 
   h2 {
-    font-size: 1.75em;
+    font-size: 2.38em;
     margin: 0;
     // color: #dc0d0d;
   }
@@ -37,17 +37,23 @@
   flex-direction: column;
   align-items: center;
   min-width: 400px;
-  // margin: 100px auto;
-  padding: 20px;
+  padding: 20px 20px 50px 20px;
   background-color: #f9f9f9;
   border: 1px solid $input-border;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  row-gap: 1em;
+
+  hr {
+    border: none;
+    height: 0.1em;
+    background-color: #c5c5c5;
+    width: 80%;
+  }
 
   input {
     padding: 10px;
-    min-width: 80%;
-    margin: 5px 0;
+    min-width: 85%;
     font-size: 16px;
     border: 1px solid $input-border;
     border-radius: 5px;
@@ -60,6 +66,7 @@
 
   a {
     text-decoration: none;
+    font-size: 1.2em;
 
     &:hover {
       text-decoration: underline;
@@ -67,7 +74,6 @@
   }
 
   button {
-    margin: 10px 0;
     min-width: 85%;
     padding: 10px;
     font-size: 18px;
@@ -85,9 +91,7 @@
 
   #sign-up {
     background-color: $secondary-color;
-    margin: 10px 0;
     padding: 10px;
-    min-width: 50%;
     font-size: 18px;
     text-align: center;
     color: white;

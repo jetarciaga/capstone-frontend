@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useAuth } from "../context/AuthProvider";
-import axios from "axios";
 import "./Login.scss";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
   const { login } = useAuth();
   const [credentials, setCredentials] = useState({
     email: "",
@@ -20,6 +21,10 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await login(credentials);
+  };
+
+  const handleClick = () => {
+    navigate("/signup");
   };
 
   return (
@@ -50,9 +55,9 @@ const Login = () => {
           Forgot password?
         </a>
         <hr />
-        <a role="button" id="sign-up">
+        <button id="sign-up" onClick={handleClick}>
           Sign up
-        </a>
+        </button>
       </form>
     </div>
   );

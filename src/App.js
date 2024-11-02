@@ -1,4 +1,5 @@
 import "./App.css";
+import { useState } from "react";
 import Dashboard from "./components/Dashboard";
 import Login from "./components/Login";
 import Logout from "./components/Logout";
@@ -12,6 +13,8 @@ import Navbar from "./components/Navbar";
 
 const App = () => {
   const auth = useAuth();
+  const [userData, setUserData] = useState(null);
+
   return (
     <main className="App">
       {auth.isAuthenticated && <Navbar />}

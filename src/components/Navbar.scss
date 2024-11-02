@@ -8,11 +8,55 @@
 nav {
   display: flex;
   justify-content: space-between;
-  padding: 5px 0;
+  padding: 5px 10px;
   background-color: $primary-color;
   color: white;
 
   div {
     padding: 5px 10px;
+  }
+
+  .profile {
+    position: relative;
+    display: flex;
+
+    button {
+      display: grid;
+      place-items: center;
+      background-color: #fff;
+      color: #3a3a3a;
+      border: 0.1rem solid $input-border;
+      font-size: 1.5em;
+      font-weight: bold;
+      width: 2.5em;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      border-width: 0.1em;
+      cursor: pointer;
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      top: 100%;
+      right: 0;
+      background-color: #fff;
+      border: 0.1rem solid $input-border;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      border-radius: 4px;
+      padding: 1em 0;
+      z-index: 1000;
+      width: 150px;
+
+      li {
+        color: #000;
+        list-style: none;
+        margin: 0 2em;
+        font-size: 1.3em;
+        padding: 0.5em 0;
+        cursor: pointer;
+      }
+    }
   }
 }

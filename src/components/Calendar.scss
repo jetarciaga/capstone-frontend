@@ -1,21 +1,14 @@
 @import "../styles/variables/";
 @import "../styles/mixins";
 
-.calendar-app {
-  width: 60%;
-  min-width: 90vmin;
-  aspect-ratio: 3 / 2;
-  padding: 3rem;
-  border-radius: 3rem;
+.calendar {
+  max-width: 350px;
   border: 0.1rem solid $input-border;
-  column-gap: 5rem;
-
-  .calendar {
-    width: 40%;
-  }
+  border-radius: 3rem;
+  padding: 2em;
 
   .heading {
-    font-family: "Bebas Neue", sans-serif;
+    font-family: "Bebas Neue", "Comfortaa";
     font-size: clamp(4rem, 3.8cqi, 7rem);
     letter-spacing: 0.1rem;
     text-transform: uppercase;
@@ -31,6 +24,7 @@
 
     h2 {
       font-size: clamp(1.5rem, 1.5cqi, 2.5rem);
+      font-family: "Comfortaa", sans-serif;
     }
 
     .buttons {
@@ -71,6 +65,7 @@
       text-transform: uppercase;
       letter-spacing: 0.1rem;
       justify-content: center;
+      font-family: "Comfortaa", sans-serif;
     }
   }
 
@@ -89,7 +84,7 @@
       text-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
 
       &:hover {
-        color: darken($secondary-color, 10%);
+        color: $primary-color;
         transition: color 0.3s ease;
       }
     }
