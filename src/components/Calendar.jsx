@@ -1,7 +1,8 @@
 import { useState } from "react";
 import "./Calendar.scss";
+import api from "./api";
 
-const Calendar = ({ setDate }) => {
+const Calendar = ({ setDate, setTime }) => {
   const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   const monthsOfYear = [
     "January",
@@ -58,13 +59,25 @@ const Calendar = ({ setDate }) => {
     );
   };
 
-  const handleDayClick = (day) => {
+  const handleDayClick = async (day) => {
     const clickedDate = new Date(currentYear, currentMonth, day);
     const today = new Date();
 
     if (clickedDate >= today) {
       setSelectedDate(clickedDate);
       setDate(new Date(currentYear, currentMonth, day + 1));
+
+      try {
+        const response = await api.post("timeslots/", {
+          selected_date: new Date(currentYear, currentMonth, day + 1)
+            .toISOString()
+            .slice(0, 10),
+        });
+        const data = response.data;
+        setTime(data);
+      } catch (error) {
+        console.error("Error posting data", error);
+      }
     }
   };
 

@@ -1,6 +1,7 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import "./Appointment.scss";
 import Calendar from "./Calendar";
+import api from "./api";
 
 const Appointment = () => {
   const handleSubmit = async (e) => {
@@ -12,13 +13,27 @@ const Appointment = () => {
     (date) => setAppointmentDate(date),
     []
   );
+  const [timeslots, setTimeslots] = useState([]);
+  const setTimeslotsFromDate = useCallback(
+    (timeslots) => setTimeslots(timeslots.available_slots),
+    []
+  );
+
   return (
     <div className="appointment-container">
-      <Calendar setDate={setAppointmentDate} />
+      <Calendar setDate={setAppointmentDate} setTime={setTimeslotsFromDate} />
       <form onSubmit={handleSubmit}>
         <input type="date" value={appointmentDate.toISOString().slice(0, 10)} />
+        <label for="time">Choose available time:</label>
+        <select id="time" name="time">
+          <option value="" disabled>
+            Choose time
+          </option>
+          {[...timeslots].map((time, index) => (
+            <option key={index}>{time}</option>
+          ))}
+        </select>
       </form>
-      {/* <p>{appointmentDate.toISOString().slice(0, 10)}</p> */}
     </div>
   );
 };
