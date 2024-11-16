@@ -4,13 +4,22 @@ import Calendar from "./Calendar";
 import api from "./api";
 
 const Appointment = () => {
+  const [formData, setFormData] = useState({
+    user: JSON.parse(localStorage.getItem("user")).id,
+    date: new Date().toISOString().slice(0, 10),
+    purpose: 10,
+    timeslot: "",
+    status: "pending",
+  });
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(formData);
   };
 
   const [appointmentDate, setAppointmentDate] = useState(new Date());
   const setAppointmentFromCalendar = useCallback(
-    (date) => setAppointmentDate(date),
+    (date) => setAppointmentDate(date).toISOString().slice(0, 10),
     []
   );
   const [timeslots, setTimeslots] = useState([]);
@@ -20,43 +29,62 @@ const Appointment = () => {
   );
 
   const [documents, setDocuments] = useState([]);
+
   useEffect(() => {
-    const fetchDocuments = async () => {
+    const fetchData = async () => {
       try {
         const response = await api.get("documents/");
         setDocuments(response.data);
       } catch (error) {
-        console.error("Error retrieving documents", error);
+        console.error("Error fetching data:", error);
       }
     };
-    fetchDocuments();
+
+    fetchData();
   }, []);
 
-  const [selectedDocument, setSelectedDocument] = useState([]);
-  const handleSelectedDocument = async (event) => {
-    setSelectedDocument(event.target.value);
-  };
-
   const [requirements, setRequirements] = useState([]);
-
   useEffect(() => {
     api
-      .get(`requirements/${selectedDocument}/`)
+      .get(`requirements/${formData.purpose}/`)
       .then((response) => setRequirements(response.data))
       .catch((error) => console.error(error));
-  }, [selectedDocument]);
+  }, [formData]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+
+    if (name === "purpose") {
+      console.log(e.target.value);
+      api
+        .get(`requirements/${e.target.value}/`)
+        .then((response) => setRequirements(response.data))
+        .catch((error) => console.log(error));
+    }
+  };
+
+  const updateProperty = (key, value) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      [key]: value,
+    }));
+  };
 
   return (
     <div className="appointment-container">
-      <Calendar setDate={setAppointmentDate} setTime={setTimeslotsFromDate} />
+      <Calendar onValueChange={updateProperty} setTime={setTimeslotsFromDate} />
       <form className="schedule-form" onSubmit={handleSubmit}>
         <label htmlFor="document">Choose Document:</label>
-        <select id="document" name="document" onChange={handleSelectedDocument}>
+        <select id="purpose" name="purpose" onChange={handleChange}>
           <option value="" disabled>
             Choose Document
           </option>
           {[...documents].map((document, index) => (
-            <option key={index} value={document.name} details={document}>
+            <option key={index} value={document.id}>
               {document.name}
             </option>
           ))}
@@ -69,13 +97,13 @@ const Appointment = () => {
               ))}
           </ul>
         </div>
-        <input
+        {/* <input
           type="date"
           value={appointmentDate.toISOString().slice(0, 10)}
           onChange={() => {}}
-        />
-        <label htmlFor="time">Choose available time:</label>
-        <select id="time" name="time">
+        /> */}
+        <label htmlFor="timeslot">Choose available time:</label>
+        <select id="timeslot" name="timeslot" onChange={handleChange}>
           <option value="" disabled>
             Choose time
           </option>
@@ -85,6 +113,7 @@ const Appointment = () => {
             </option>
           ))}
         </select>
+        <button type="submit">Schedule Appointment</button>
       </form>
     </div>
   );

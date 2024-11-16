@@ -1,6 +1,13 @@
 @import "../styles/variables/";
 @import "../styles/mixins";
 
+.appointment-app {
+  h1 {
+    font-family: "Comfortaa", "Roboto", sans-serif;
+    font-size: 3em;
+  }
+}
+
 .calendar {
   max-width: 350px;
   border: 0.1rem solid $input-border;

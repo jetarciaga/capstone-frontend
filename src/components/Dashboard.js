@@ -6,13 +6,12 @@ import Calendar from "./Calendar";
 
 const Dashboard = () => {
   const { accessToken } = useAuth();
-  const [data, setData] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await api.get("users/");
-        setData(response.data);
+        localStorage.setItem("user", JSON.stringify(response.data));
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -27,7 +26,7 @@ const Dashboard = () => {
     <div>
       <h1>Dashboard</h1>
       <Appointment />
-      {data ? <pre>{JSON.stringify(data, null, 2)}</pre> : "Loading..."}
+      {/* {user ? <pre>{JSON.stringify(user, null, 2)}</pre> : "Loading..."} */}
     </div>
   );
 };

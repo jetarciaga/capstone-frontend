@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./Calendar.scss";
 import api from "./api";
 
-const Calendar = ({ setDate, setTime }) => {
+const Calendar = ({ onValueChange, setDate, setTime }) => {
   const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   const monthsOfYear = [
     "January",
@@ -65,7 +65,10 @@ const Calendar = ({ setDate, setTime }) => {
 
     if (clickedDate >= today) {
       setSelectedDate(clickedDate);
-      setDate(new Date(currentYear, currentMonth, day + 1));
+      onValueChange(
+        "date",
+        new Date(currentYear, currentMonth, day + 1).toISOString().slice(0, 10)
+      );
 
       try {
         const response = await api.post("timeslots/", {
@@ -74,7 +77,9 @@ const Calendar = ({ setDate, setTime }) => {
             .slice(0, 10),
         });
         const data = response.data;
+        // console.log(data.available_slots[0]);
         setTime(data);
+        onValueChange("timeslot", [...data.available_slots][0]);
       } catch (error) {
         console.error("Error posting data", error);
       }

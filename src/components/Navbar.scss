@@ -7,10 +7,49 @@
 
 nav {
   display: flex;
-  justify-content: space-between;
-  padding: 5px 10px;
-  background-color: $primary-color;
+  flex-direction: column;
+  width: 300px;
+  background-color: white;
   color: white;
+  height: 100vh;
+  row-gap: 2em;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.05);
+
+  h2 {
+    font-family: "Comfortaa", "Roboto", sans-serif;
+    line-height: 1.5em;
+    font-size: 1.75em;
+    text-align: center;
+    background-color: $primary-color;
+    padding: 3em 0;
+  }
+
+  ul {
+    li {
+      list-style: none;
+      padding: 2em 0;
+      text-indent: 3em;
+      display: flex;
+      align-items: center;
+
+      &:hover {
+        background-color: #eaeaea;
+      }
+
+      i {
+        color: $primary-color;
+        font-size: 2.5em;
+      }
+
+      span {
+        color: $primary-color;
+        text-indent: 1.5em;
+        font-size: 1.7em;
+        text-align: center;
+        // align-items: center;
+      }
+    }
+  }
 
   div {
     padding: 5px 10px;

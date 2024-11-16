@@ -2,11 +2,14 @@ import { useState, useEffect, useRef } from "react";
 import { useAuth } from "../context/AuthProvider";
 import api from "./api";
 import "./Navbar.scss";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const { accessToken, logout } = useAuth();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -46,10 +49,25 @@ const Navbar = () => {
 
   return (
     <nav>
-      <div className="left-side">sample</div>
-      <div id="logo">
-        <h2>Barangay Putatan Online Appointment System</h2>
-      </div>
+      <h2>Barangay Putatan Online Appointment System</h2>
+      <ul>
+        <li
+          onClick={() => {
+            navigate("/dashboard");
+          }}
+        >
+          <i className="bx bxs-home-alt-2" />
+          <span>Home</span>
+        </li>
+        <li
+          onClick={() => {
+            navigate("/appointment");
+          }}
+        >
+          <i className="bx bxs-calendar" />
+          <span>Schedule Appointment</span>
+        </li>
+      </ul>
       <div className="profile" onClick={toggleDropdown}>
         <button>
           {data instanceof Array ? (
