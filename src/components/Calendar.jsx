@@ -88,7 +88,6 @@ const Calendar = ({ onValueChange, setDate, setTime }) => {
 
   return (
     <div className="calendar">
-      <h1 className="heading">Calendar</h1>
       <div className="navigate-date">
         <h2 className="month">{monthsOfYear[currentMonth]},</h2>
         <h2 className="year">{currentYear}</h2>

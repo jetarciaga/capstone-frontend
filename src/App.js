@@ -4,6 +4,7 @@ import Dashboard from "./components/Dashboard";
 import Login from "./components/Login";
 import Logout from "./components/Logout";
 import Signup from "./components/Signup";
+import ProfileBar from "./components/ProfileBar";
 
 import PrivateRoute from "./routes/PrivateRoute";
 import { Route, Routes, Navigate } from "react-router-dom";
@@ -33,7 +34,15 @@ const App = () => {
   // };
 
   return (
-    <main className="App">
+    <main
+      className="App"
+      style={{
+        display: "flex",
+        flexDirection: auth.isAuthenticated ? "row" : "column",
+        columnGap: "2em",
+        justifyContent: "space-between",
+      }}
+    >
       {auth.isAuthenticated && <Navbar />}
       <Routes>
         <Route
@@ -71,6 +80,7 @@ const App = () => {
           }
         />
       </Routes>
+      {auth.isAuthenticated && <ProfileBar />}
     </main>
   );
 };

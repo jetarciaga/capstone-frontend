@@ -27,23 +27,6 @@ const Navbar = () => {
     }
   }, [accessToken]);
 
-  const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef(null);
-
-  const toggleDropdown = () => {
-    setIsOpen((prevState) => !prevState);
-  };
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setIsOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
   if (loading) return <p> Loading...</p>;
   console.log(data);
 
@@ -68,24 +51,6 @@ const Navbar = () => {
           <span>Schedule Appointment</span>
         </li>
       </ul>
-      <div className="profile" onClick={toggleDropdown}>
-        <button>
-          {data instanceof Array ? (
-            <p style={{ fontSize: "0.6em", textTransform: "uppercase" }}>
-              Admin
-            </p>
-          ) : (
-            data.firstname.charAt(0) + data.lastname.charAt(0)
-          )}
-        </button>
-
-        {isOpen && (
-          <ul className="dropdown-menu">
-            <li>Settings</li>
-            <li onClick={() => logout()}>Logout</li>
-          </ul>
-        )}
-      </div>
     </nav>
   );
 };

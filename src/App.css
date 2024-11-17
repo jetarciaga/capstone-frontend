@@ -1,7 +1,1 @@
 @import "~normalize.css";
-
-.App {
-  display: flex;
-  /* justify-content: space-between; */
-  column-gap: 2em;
-}

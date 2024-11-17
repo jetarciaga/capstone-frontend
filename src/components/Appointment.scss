@@ -1,6 +1,19 @@
 @import "../styles/variables/";
 @import "../styles/mixins";
 
+.appointment {
+  display: flex;
+  flex-direction: column;
+  row-gap: 2em;
+  align-items: center;
+  margin: 4em 0;
+
+  h1 {
+    font-family: "Comfortaa", "Roboto", sans-serif;
+    font-size: 3em;
+  }
+}
+
 .appointment-container {
   display: flex;
   flex-wrap: wrap;
@@ -8,22 +21,64 @@
   column-gap: 2em;
   row-gap: 2em;
 
-  border: 0.1rem solid $input-border;
   // flex-direction: column;
 
   .schedule-form {
     display: flex;
     flex-direction: column;
     min-width: 350px;
+    row-gap: 1.5em;
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      row-gap: 0.2em;
+      font-size: 1.2em;
+    }
+
+    button {
+      min-width: 60%;
+      padding: 10px;
+      font-size: 18px;
+      color: white;
+      background-color: $secondary-color;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: darken($secondary-color, 10%);
+      }
+    }
 
     .requirements {
-      min-height: 100px;
+      display: flex;
+      flex-direction: column;
+      min-height: 200px;
+      border: solid 0.1em $input-border;
+      border-radius: 10px;
+      padding: 1em 1em;
+      row-gap: 1em;
+
+      p {
+        font-size: 1.4em;
+      }
+
+      ul {
+        margin: 0 2em;
+        li {
+          font-family: $font-stack;
+          font-size: 1.4em;
+          line-height: 1.5em;
+        }
+      }
     }
 
     select {
       padding: 0.2em;
       height: 2.5em;
-      font-size: 1.5em;
+      font-size: 1.3em;
       width: 100%;
       border-radius: 10px;
     }

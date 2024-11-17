@@ -26,6 +26,13 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       console.error("Login error:", error);
     }
+
+    try {
+      const user = await api.get("users/");
+      localStorage.setItem("user", JSON.stringify(user.data));
+    } catch (error) {
+      console.error("Fetching user error:", error);
+    }
   };
 
   const logout = async () => {
@@ -34,6 +41,7 @@ export const AuthProvider = ({ children }) => {
       await api.post("token/blacklist/", { refresh });
       localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");
+      localStorage.removeItem("user");
       setAccessToken(null);
       setIsAuthenticated(false);
       navigate("/");

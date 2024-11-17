@@ -4,8 +4,10 @@ import Calendar from "./Calendar";
 import api from "./api";
 
 const Appointment = () => {
+  const user = localStorage.getItem("user");
+
   const [formData, setFormData] = useState({
-    user: JSON.parse(localStorage.getItem("user")).id,
+    user: user ? JSON.parse(user).id : null,
     date: new Date().toISOString().slice(0, 10),
     purpose: 10,
     timeslot: "",
@@ -14,7 +16,7 @@ const Appointment = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+    // api.post("appointments/", formData);
   };
 
   const [appointmentDate, setAppointmentDate] = useState(new Date());
@@ -75,46 +77,57 @@ const Appointment = () => {
   };
 
   return (
-    <div className="appointment-container">
-      <Calendar onValueChange={updateProperty} setTime={setTimeslotsFromDate} />
-      <form className="schedule-form" onSubmit={handleSubmit}>
-        <label htmlFor="document">Choose Document:</label>
-        <select id="purpose" name="purpose" onChange={handleChange}>
-          <option value="" disabled>
-            Choose Document
-          </option>
-          {[...documents].map((document, index) => (
-            <option key={index} value={document.id}>
-              {document.name}
-            </option>
-          ))}
-        </select>
-        <div className="requirements">
-          <ul>
-            {requirements &&
-              requirements.map((value, index) => (
-                <li key={index}>{value.name}</li>
+    <div className="appointment">
+      <h1>Schedule an Appointment</h1>
+      <div className="appointment-container">
+        <Calendar
+          onValueChange={updateProperty}
+          setTime={setTimeslotsFromDate}
+        />
+        <form className="schedule-form" onSubmit={handleSubmit}>
+          <div className="input-group">
+            <label htmlFor="document">Choose Document:</label>
+            <select id="purpose" name="purpose" onChange={handleChange}>
+              <option value="" disabled>
+                Choose Document
+              </option>
+              {[...documents].map((document, index) => (
+                <option key={index} value={document.id}>
+                  {document.name}
+                </option>
               ))}
-          </ul>
-        </div>
-        {/* <input
+            </select>
+          </div>
+          <div className="requirements">
+            <p>Please prepare the following requirements: </p>
+            <ul>
+              {requirements &&
+                requirements.map((value, index) => (
+                  <li key={index}>{value.name}</li>
+                ))}
+            </ul>
+          </div>
+          {/* <input
           type="date"
           value={appointmentDate.toISOString().slice(0, 10)}
           onChange={() => {}}
         /> */}
-        <label htmlFor="timeslot">Choose available time:</label>
-        <select id="timeslot" name="timeslot" onChange={handleChange}>
-          <option value="" disabled>
-            Choose time
-          </option>
-          {[...timeslots].map((time, index) => (
-            <option key={index} value={time}>
-              {time}
-            </option>
-          ))}
-        </select>
-        <button type="submit">Schedule Appointment</button>
-      </form>
+          <div className="input-group">
+            <label htmlFor="timeslot">Choose available time:</label>
+            <select id="timeslot" name="timeslot" onChange={handleChange}>
+              <option value="" disabled>
+                Choose time
+              </option>
+              {[...timeslots].map((time, index) => (
+                <option key={index} value={time}>
+                  {time}
+                </option>
+              ))}
+            </select>
+          </div>
+          <button type="submit">Schedule Appointment</button>
+        </form>
+      </div>
     </div>
   );
 };

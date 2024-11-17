@@ -25,8 +25,6 @@ const Dashboard = () => {
   return (
     <div>
       <h1>Dashboard</h1>
-      <Appointment />
-      {/* {user ? <pre>{JSON.stringify(user, null, 2)}</pre> : "Loading..."} */}
     </div>
   );
 };
