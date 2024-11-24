@@ -14,6 +14,7 @@ import Navbar from "./components/Navbar";
 import Calendar from "./components/Calendar";
 import Appointment from "./components/Appointment";
 import api from "./components/api";
+import AppointmentDetails from "./components/AppointmentDetails";
 
 const App = () => {
   const auth = useAuth();
@@ -76,6 +77,14 @@ const App = () => {
           element={
             <PrivateRoute>
               <Appointment />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/appointment/:id"
+          element={
+            <PrivateRoute>
+              <AppointmentDetails />
             </PrivateRoute>
           }
         />
