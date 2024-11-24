@@ -4,18 +4,9 @@
 .dashboard {
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
   box-sizing: border-box;
   height: 100vh;
   padding: 0 3em;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  flex: 1;
-  align-items: center;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
 
   hr {
     border: 0.1em solid $input-border;
@@ -25,8 +16,15 @@
   .appointments-container {
     display: flex;
     flex-direction: column;
+    flex-direction: flex-start;
+    overflow-y: auto;
+    box-sizing: border-box;
     row-gap: 0.5em;
-    width: 80%;
+    width: 100%;
+    padding: 0 1em;
+    height: 100vh;
+    scrollbar-width: none;
+    margin: 1em 0;
 
     div {
       display: flex;

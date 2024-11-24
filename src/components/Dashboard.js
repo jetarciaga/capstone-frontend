@@ -43,6 +43,8 @@ const Dashboard = () => {
       <h1 style={{ alignSelf: "flex-start" }}>Featured Appointment</h1>
       <hr />
       <AppointmentDetails appointment={selectedAppointment} />
+      <h1>List of Appointments</h1>
+      <hr />
       <div className="appointments-container">
         {[...appointments].map((value, index) => (
           <div key={index} onClick={() => setSelectedAppointment(value)}>

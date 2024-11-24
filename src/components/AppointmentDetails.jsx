@@ -33,38 +33,38 @@ const AppointmentDetails = ({ appointment }) => {
       </div>
 
       <div className="appointment-information">
-        <div className="row">
-          <div className="info-group">
+        <ul>
+          <li className="info-group">
             <h2>Purpose</h2>
+            <span>:</span>
             <p>{appointment.purpose_name}</p>
-          </div>
-          <div className="info-group">
+          </li>
+          <li className="info-group">
             <h2>Date</h2>
+            <span>:</span>
             <p>{convertDate(appointment.date)}</p>
-          </div>
-        </div>
-
-        <div className="row">
-          <div className="info-group">
-            <h2>Requested By</h2>
-            <p>{user.firstname + " " + user.lastname}</p>
-          </div>
-          <div className="info-group">
+          </li>
+          <li className="info-group">
             <h2>Time</h2>
+            <span>:</span>
             <p>{convertTime(appointment.timeslot)}</p>
-          </div>
-        </div>
-
+          </li>
+          <li className="info-group">
+            <h2>Requested By</h2>
+            <span>:</span>
+            <p>{user.firstname + " " + user.lastname}</p>
+          </li>
+        </ul>
+        <hr />
         <div className="requirements">
-          <div>
-            <h2>Requirements</h2>
-            <ul>
-              {requirements &&
-                requirements.map((value, index) => (
-                  <li key={index}>{value.name}</li>
-                ))}
-            </ul>
-          </div>
+          <h2>Requirements</h2>
+          <span>:</span>
+          <ul>
+            {requirements &&
+              requirements.map((value, index) => (
+                <li key={index}> {value.name}</li>
+              ))}
+          </ul>
         </div>
       </div>
     </div>
