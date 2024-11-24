@@ -4,20 +4,9 @@ import api from "./api";
 import "./AppointmentDetails.scss";
 import { convertDate, convertTime } from "../utils/scheduleHelpers";
 
-const AppointmentDetails = () => {
-  const { id } = useParams();
-  const [appointment, setAppointment] = useState(null);
+const AppointmentDetails = ({ appointment }) => {
   const [requirements, setRequirements] = useState(null);
   const [user, setUser] = useState("");
-
-  useEffect(() => {
-    api
-      .get(`appointments/${id}/`)
-      .then((response) => {
-        setAppointment(response.data);
-      })
-      .catch((error) => console.error("Error fetching appointment:", error));
-  }, [id]);
 
   useEffect(() => {
     if (appointment) {
@@ -32,8 +21,6 @@ const AppointmentDetails = () => {
         .catch((error) => console.error(error));
     }
   }, [appointment]);
-
-  console.log("here", JSON.stringify(appointment));
 
   if (!appointment) {
     return <p>Loading...</p>;

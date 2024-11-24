@@ -2,14 +2,13 @@ import React, { useEffect, useState } from "react";
 import api from "./api";
 import { useAuth } from "../context/AuthProvider";
 import "./Dashboard.scss";
-import { useNavigate } from "react-router-dom";
 import AppointmentDetails from "./AppointmentDetails";
 import { convertDate } from "../utils/scheduleHelpers";
 
 const Dashboard = () => {
-  const navigate = useNavigate();
   const { accessToken } = useAuth();
   const [appointments, setAppointments] = useState([]);
+  const [selectedAppointment, setSelectedAppointment] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -33,18 +32,20 @@ const Dashboard = () => {
       .catch((error) => console.error(error));
   }, []);
 
+  useEffect(() => {
+    if (appointments.length > 0) {
+      setSelectedAppointment(appointments[0]);
+    }
+  }, [appointments]);
+
   return (
     <div className="dashboard">
-      <h1>Dashboard</h1>
-      <AppointmentDetails />
+      <h1 style={{ alignSelf: "flex-start" }}>Featured Appointment</h1>
+      <hr />
+      <AppointmentDetails appointment={selectedAppointment} />
       <div className="appointments-container">
         {[...appointments].map((value, index) => (
-          <div
-            key={index}
-            onClick={() => {
-              navigate(`/appointment/${value.id}/`);
-            }}
-          >
+          <div key={index} onClick={() => setSelectedAppointment(value)}>
             <div className="schedule">
               <h2>{convertDate(value.date)}</h2>
               <h3>{value.timeslot.slice(0, -3)}</h3>

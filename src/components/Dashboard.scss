@@ -17,6 +17,11 @@
     display: none;
   }
 
+  hr {
+    border: 0.1em solid $input-border;
+    width: 100%;
+  }
+
   .appointments-container {
     display: flex;
     flex-direction: column;
