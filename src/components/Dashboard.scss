@@ -1,0 +1,84 @@
+@import "../styles/variables/";
+@import "../styles/mixins";
+
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  box-sizing: border-box;
+  height: 100vh;
+  padding: 0 3em;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  flex: 1;
+  align-items: center;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  .appointments-container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.5em;
+    width: 80%;
+
+    div {
+      display: flex;
+      column-gap: 2em;
+      border-radius: 10px;
+      height: 80px;
+      background-color: #efefef;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.01);
+
+      &:hover {
+        transform: scale(1.02);
+        box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+      }
+
+      .schedule {
+        display: flex;
+        flex-direction: column;
+        row-gap: 1em;
+        width: 125px;
+        padding: 1em;
+        border-radius: 10px;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        background-color: $primary-color;
+        color: white;
+
+        h2,
+        h3 {
+          font-family: "Comfortaa", "Roboto", sans-serif;
+        }
+
+        h3 {
+          font-size: 1.4em;
+        }
+      }
+
+      .status {
+        display: flex;
+        flex-direction: column;
+        width: 200px;
+        padding: 1em;
+        border-radius: 10px;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        background-color: $tertiary-color;
+
+        span {
+          font-family: "Roboto", sans-serif;
+          font-size: 1.3em;
+        }
+      }
+
+      h1 {
+        width: 100%;
+      }
+    }
+  }
+}

@@ -6,9 +6,77 @@
   flex-direction: column;
   align-items: center;
   width: 300px;
-  height: 300px;
+  height: 100vh;
   padding: 1.5em;
+  padding-top: 2em;
   // border: solid 0.1em $input-border;
+  row-gap: 2em;
+
+  .right-navbar {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1em;
+    height: 100vh;
+    li {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      list-style: none;
+      font-size: 1.5em;
+      padding: 0.5em;
+      column-gap: 1em;
+      // border: 0.1em solid $input-border;
+      border-radius: 25px;
+      box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.15);
+      transition: all 0.2s ease-in-out;
+
+      &:hover {
+        background-color: darken($primary-color, 10%);
+        color: #fff;
+        i {
+          background-color: #fff;
+          color: $primary-color;
+        }
+      }
+      i {
+        color: #fff;
+        background-color: $primary-color;
+        font-size: 2em;
+        border-radius: 50%;
+        padding: 0.3em;
+      }
+    }
+  }
+
+  .copyright {
+    .social {
+      display: flex;
+      justify-content: center;
+      column-gap: 1em;
+      margin-bottom: 1em;
+
+      i {
+        color: $primary-color;
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
+
+        &:hover {
+          color: $secondary-color;
+        }
+      }
+    }
+    align-self: flex-end;
+    text-align: justify;
+    p {
+      font-size: 1.3em;
+      text-align: center;
+    }
+  }
+
+  hr {
+    border: 0.1em solid $input-border;
+    width: 70%;
+  }
 
   .user-group {
     position: relative;

@@ -16,7 +16,7 @@ const Appointment = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // api.post("appointments/", formData);
+    api.post("appointments/", formData);
   };
 
   const [appointmentDate, setAppointmentDate] = useState(new Date());

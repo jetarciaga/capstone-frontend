@@ -63,6 +63,30 @@ const ProfileBar = () => {
           </ul>
         )}
       </div>
+      <hr />
+      <ul className="right-navbar">
+        <li>
+          <i className="bx bxs-megaphone" />
+          Announcements
+        </li>
+        <li>
+          <i className="bx bxs-award" />
+          Careers
+        </li>
+        <li>
+          <i className="bx bxs-user-voice" />
+          Contact Us
+        </li>
+      </ul>
+      <div className="copyright">
+        <div className="social">
+          <i className="bx bxl-facebook-circle" />
+          <i className="bx bxl-instagram-alt" />
+          <i className="bx bxl-twitter" />
+        </div>
+        <p>&copy; 2024 PLMun Students Capstone.</p>
+        <p>All rights reserved.</p>
+      </div>
     </div>
   );
 };
