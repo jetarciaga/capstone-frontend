@@ -41,14 +41,19 @@ const AppointmentDetails = ({ appointment }) => {
       </div>
       {showHistory ? (
         <div className="status-history">
-          {sortHistoryByTimestamp(appointment.status_history).map(
-            (value, index) => (
-              <div className="history-detail" key={index}>
-                <p className="stat">Status {value.status.toUpperCase()}</p>
-                <span>|</span>
-                <p>Timestamp {value.timestamp}</p>
-              </div>
+          {appointment.status_history &&
+          appointment.status_history.length > 0 ? (
+            sortHistoryByTimestamp(appointment.status_history).map(
+              (value, index) => (
+                <div className="history-detail" key={index}>
+                  <p className="stat">Status {value.status.toUpperCase()}</p>
+                  <span>|</span>
+                  <p>Timestamp {value.timestamp}</p>
+                </div>
+              )
             )
+          ) : (
+            <h2>No history yet.</h2>
           )}
         </div>
       ) : (

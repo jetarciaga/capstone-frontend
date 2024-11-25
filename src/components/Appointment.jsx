@@ -1,10 +1,16 @@
 import { useState, useCallback, useEffect } from "react";
 import "./Appointment.scss";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 import Calendar from "./Calendar";
 import api from "./api";
+import { useNavigate } from "react-router-dom";
+
+const MySwal = withReactContent(Swal);
 
 const Appointment = () => {
   const user = localStorage.getItem("user");
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     user: user ? JSON.parse(user).id : null,
@@ -16,7 +22,26 @@ const Appointment = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    api.post("appointments/", formData);
+    try {
+      const response = await api.post("appointments/", formData);
+      console.log("success:", response.data);
+
+      MySwal.fire({
+        icon: "success",
+        title: "Schedule successfully created.",
+        showConfirmButton: false,
+        timer: 2000,
+      }).then(() => {
+        navigate("/dashboard");
+      });
+    } catch (error) {
+      console.error("error:", error);
+      MySwal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Failed to create appointment. Please try again.",
+      });
+    }
   };
 
   const [appointmentDate, setAppointmentDate] = useState(new Date());
