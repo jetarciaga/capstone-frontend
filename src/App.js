@@ -18,21 +18,7 @@ import AppointmentDetails from "./components/AppointmentDetails";
 
 const App = () => {
   const auth = useAuth();
-  // const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
-
-  // const fetchUser = async (user) => {
-  //   setLoading(true);
-  //   try {
-  //     const response = await api.get("users/");
-  //     localStorage.setItem("user", user);
-  //     // setUser(response.data);
-  //   } catch (error) {
-  //     console.error("Error fetching data:", error);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
 
   return (
     <main
@@ -77,14 +63,6 @@ const App = () => {
           element={
             <PrivateRoute>
               <Appointment />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/appointment/:id"
-          element={
-            <PrivateRoute>
-              <AppointmentDetails />
             </PrivateRoute>
           }
         />

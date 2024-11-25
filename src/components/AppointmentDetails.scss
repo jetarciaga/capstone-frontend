@@ -11,6 +11,32 @@
   margin-top: 2em;
   row-gap: 1em;
 
+  .status-history {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1em;
+
+    .history-detail:nth-child(even) {
+      background-color: $ligh-color;
+    }
+
+    .history-detail {
+      display: flex;
+      justify-content: space-between;
+      width: 550px;
+      padding: 1em 1em;
+      p {
+        font-size: 1.5em;
+      }
+      .stat {
+        width: 150px;
+      }
+      span {
+        font-size: 1.5em;
+      }
+    }
+  }
+
   .appointment-status {
     h1 {
       font-size: 3em;
@@ -48,6 +74,7 @@
         font-weight: 400;
       }
       span {
+        font-weight: bold;
         font-size: 1.5em;
         color: #868686;
       }
@@ -80,6 +107,7 @@
         span {
           font-size: 1.5em;
           color: #868686;
+          font-weight: bold;
         }
         p {
           width: 150px;

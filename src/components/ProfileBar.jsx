@@ -54,7 +54,7 @@ const ProfileBar = () => {
           <p>{user.is_staff ? "Admin" : "Resident"}</p>
         </div>
         <button onClick={() => setIsOpen((prevState) => !prevState)}>
-          <i className="bx bxs-chevron-down" />
+          <i className="bx bxs-down-arrow" />
         </button>
         {isOpen && (
           <ul className="dropdown-menu">

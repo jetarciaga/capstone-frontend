@@ -3,7 +3,7 @@ import api from "./api";
 import { useAuth } from "../context/AuthProvider";
 import "./Dashboard.scss";
 import AppointmentDetails from "./AppointmentDetails";
-import { convertDate } from "../utils/scheduleHelpers";
+import { convertDate, convertTime } from "../utils/scheduleHelpers";
 
 const Dashboard = () => {
   const { accessToken } = useAuth();
@@ -43,14 +43,14 @@ const Dashboard = () => {
       <h1 style={{ alignSelf: "flex-start" }}>Featured Appointment</h1>
       <hr />
       <AppointmentDetails appointment={selectedAppointment} />
-      <h1>List of Appointments</h1>
+      <h1>List of Appointments ({appointments.length})</h1>
       <hr />
       <div className="appointments-container">
         {[...appointments].map((value, index) => (
           <div key={index} onClick={() => setSelectedAppointment(value)}>
             <div className="schedule">
               <h2>{convertDate(value.date)}</h2>
-              <h3>{value.timeslot.slice(0, -3)}</h3>
+              <h3>{convertTime(value.timeslot)}</h3>
             </div>
             <h1>{value.purpose_name}</h1>
             <div className="status">
