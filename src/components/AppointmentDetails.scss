@@ -17,7 +17,7 @@
     row-gap: 1em;
 
     .history-detail:nth-child(even) {
-      background-color: $ligh-color;
+      background-color: $light-color;
     }
 
     .history-detail {
@@ -38,6 +38,72 @@
   }
 
   .appointment-status {
+    .status {
+      column-gap: 0.5em;
+      display: flex;
+      .update-button {
+        position: relative;
+        display: inline-block;
+        cursor: pointer;
+        i {
+          font-size: 3em;
+        }
+        .next-status {
+          color: $success-color;
+        }
+
+        .disabled {
+          color: $disabled-color;
+          cursor: not-allowed;
+        }
+
+        .cancel-appointment {
+          color: $primary-color;
+        }
+
+        .next {
+          background-color: $success-color;
+          color: $light-color;
+          &::after {
+            border-color: $success-color transparent transparent transparent;
+          }
+        }
+        .cancel {
+          background-color: $primary-color;
+          color: $light-color;
+          &::after {
+            border-color: $primary-color transparent transparent transparent;
+          }
+        }
+        .tooltip {
+          position: absolute;
+          bottom: 125%;
+          left: 50%;
+          transform: translateX(-50%);
+          padding: 8px 12px;
+          border-radius: 4px;
+          font-size: 1.2em;
+          white-space: nowrap;
+          visibility: hidden;
+          opacity: 0;
+          transition: opacity 0.3s ease visibility 0.3s ease;
+
+          &::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 5px;
+            border-style: solid;
+          }
+        }
+        &:hover .tooltip {
+          visibility: visible;
+          opacity: 1;
+        }
+      }
+    }
     h1 {
       font-size: 3em;
       font-family: "Comfortaa", "Roboto", sans-serif;
@@ -45,6 +111,7 @@
     }
     p {
       color: $primary-color;
+      margin-right: 2em;
       text-align: right;
       cursor: pointer;
 

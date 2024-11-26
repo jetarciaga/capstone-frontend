@@ -3,10 +3,12 @@ import api from "./api";
 import "./AppointmentDetails.scss";
 import { convertDate, convertTime } from "../utils/scheduleHelpers";
 import { sortHistoryByTimestamp } from "../utils/statHistoryHelper";
+import { useAuth } from "../context/AuthProvider";
 
 const AppointmentDetails = ({ appointment }) => {
+  const { user } = useAuth();
   const [requirements, setRequirements] = useState(null);
-  const [user, setUser] = useState("");
+  const [appointmentUser, setAppointmentUser] = useState("");
   const [showHistory, setShowHistory] = useState(false);
 
   const toggleHistory = () => {
@@ -17,7 +19,7 @@ const AppointmentDetails = ({ appointment }) => {
     if (appointment) {
       api
         .get(`users/${appointment.user}/`)
-        .then((response) => setUser(response.data))
+        .then((response) => setAppointmentUser(response.data))
         .catch((error) => console.error(error));
 
       api
@@ -34,7 +36,22 @@ const AppointmentDetails = ({ appointment }) => {
   return (
     <div className="appointment-details">
       <div className="appointment-status">
-        <h1>{appointment.status.toUpperCase()}</h1>
+        <div className="status">
+          {user.is_staff && (
+            <div className="update-button">
+              <i className="bx bxs-x-square cancel-appointment" />
+              <span className="tooltip cancel">Cancel this appointment</span>
+            </div>
+          )}
+          <h1>{appointment.status.toUpperCase()}</h1>
+          {/* <p>{JSON.stringify(user)}</p> */}
+          {user.is_staff && (
+            <div className="update-button">
+              <i className={`bx bxs-right-arrow-square next-status`} />
+              <span className="tooltip next">Update to next status</span>
+            </div>
+          )}
+        </div>
         <p onClick={toggleHistory}>
           {showHistory ? "<< go back" : "see history..."}
         </p>
@@ -77,7 +94,9 @@ const AppointmentDetails = ({ appointment }) => {
             <li className="info-group">
               <h2>Requested By</h2>
               <span>:</span>
-              <p>{user.firstname + " " + user.lastname}</p>
+              <p>
+                {appointmentUser.firstname + " " + appointmentUser.lastname}
+              </p>
             </li>
           </ul>
           <hr />

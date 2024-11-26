@@ -6,31 +6,42 @@ import AppointmentDetails from "./AppointmentDetails";
 import { convertDate, convertTime } from "../utils/scheduleHelpers";
 
 const Dashboard = () => {
-  const { accessToken } = useAuth();
+  const { user } = useAuth();
   const [appointments, setAppointments] = useState([]);
   const [selectedAppointment, setSelectedAppointment] = useState(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await api.get("users/");
-        localStorage.setItem("user", JSON.stringify(response.data));
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
+  const filterDate = (e) => {
+    api
+      .get(`appointments/?date=${e.target.value}`)
+      .then((response) => setAppointments(response.data))
+      .catch((error) => console.error(error));
+  };
 
-    if (accessToken) {
-      fetchData();
+  const fetchAllAppointments = (e) => {
+    if (e) {
+      e.target.value = "";
     }
-  }, [accessToken]);
-
-  useEffect(() => {
     api
       .get("appointments/")
       .then((response) => setAppointments(response.data))
       .catch((error) => console.error(error));
-  }, []);
+  };
+
+  useEffect(() => {
+    if (user) {
+      if (user.is_staff) {
+        const today = new Date().toISOString().split("T")[0];
+        document.getElementById("date").value = today;
+        api
+          .get(`appointments/?date=${today}`)
+          .then((response) => setAppointments(response.data))
+          .catch((err) => console.error(err));
+      } else {
+        document.getElementById("date").value = "";
+        fetchAllAppointments();
+      }
+    }
+  }, [user]);
 
   useEffect(() => {
     if (appointments.length > 0) {
@@ -43,7 +54,15 @@ const Dashboard = () => {
       <h1 style={{ alignSelf: "flex-start" }}>Featured Appointment</h1>
       <hr />
       <AppointmentDetails appointment={selectedAppointment} />
-      <h1>List of Appointments ({appointments.length})</h1>
+      <div className="appointment-header">
+        <h1>List of Appointments ({appointments.length})</h1>
+        <label htmlFor="date">
+          <p>Filter by date </p>
+
+          <input type="date" id="date" onChange={filterDate} />
+          <i className="bx bx-x" onClick={fetchAllAppointments} />
+        </label>
+      </div>
       <hr />
       <div className="appointments-container">
         {[...appointments].map((value, index) => (
