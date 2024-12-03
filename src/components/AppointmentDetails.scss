@@ -48,6 +48,7 @@
     .status {
       column-gap: 0.5em;
       display: flex;
+
       .update-button {
         position: relative;
         display: inline-block;
@@ -57,11 +58,6 @@
         }
         .next-status {
           color: $success-color;
-        }
-
-        .disabled {
-          color: $disabled-color;
-          cursor: not-allowed;
         }
 
         .cancel-appointment {
@@ -108,6 +104,17 @@
         &:hover .tooltip {
           visibility: visible;
           opacity: 1;
+        }
+      }
+
+      .disabled {
+        color: $disabled-color;
+        cursor: not-allowed;
+        .cancel-appointment {
+          color: $disabled-color;
+        }
+        .next-status {
+          color: $disabled-color;
         }
       }
     }

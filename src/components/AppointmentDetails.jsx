@@ -10,13 +10,12 @@ import { useNavigate } from "react-router-dom";
 
 const MySwal = withReactContent(Swal);
 
-const AppointmentDetails = ({ appointment }) => {
+const AppointmentDetails = ({ appointment, refreshAppointments }) => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const [requirements, setRequirements] = useState(null);
   const [appointmentUser, setAppointmentUser] = useState("");
   const [showHistory, setShowHistory] = useState(false);
-  const [refresh, setRefresh] = useState(false);
 
   const toggleHistory = () => {
     setShowHistory(!showHistory);
@@ -34,7 +33,7 @@ const AppointmentDetails = ({ appointment }) => {
         .then((response) => setRequirements(response.data))
         .catch((error) => console.error(error));
     }
-  }, [appointment, refresh]);
+  }, [appointment]);
 
   const updateStatus = async () => {
     const mapping = {
@@ -57,6 +56,7 @@ const AppointmentDetails = ({ appointment }) => {
           status: mapping[appointment.status],
         });
         console.log("success:", response.data);
+        refreshAppointments();
       }
     } catch (error) {
       console.error("Error updating appointment:", error);
@@ -85,7 +85,7 @@ const AppointmentDetails = ({ appointment }) => {
           status: "cancelled",
         });
         console.log("success:", response.data);
-        navigate("/dashboard", { replace: true });
+        refreshAppointments();
       }
     } catch (error) {
       console.error("Error cancelling appointment:", error);
@@ -95,6 +95,15 @@ const AppointmentDetails = ({ appointment }) => {
         "error"
       );
     }
+  };
+
+  const disableOlderDate = (date) => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const inputDate = new Date(date);
+    console.log(inputDate < today ? "disabled" : "");
+    return inputDate < today ? "disabled" : "";
   };
 
   if (!appointment) {
@@ -108,7 +117,16 @@ const AppointmentDetails = ({ appointment }) => {
           {user.is_staff &&
             appointment.status !== "cancelled" &&
             appointment.status !== "done" && (
-              <div className="update-button" onClick={cancelAppointment}>
+              <div
+                className={`update-button ${disableOlderDate(
+                  appointment.date
+                )}`}
+                onClick={
+                  disableOlderDate(appointment.date)
+                    ? () => {}
+                    : cancelAppointment
+                }
+              >
                 <i className="bx bxs-x-square cancel-appointment" />
                 <span className="tooltip cancel">Cancel this appointment</span>
               </div>
@@ -118,7 +136,14 @@ const AppointmentDetails = ({ appointment }) => {
           {user.is_staff &&
             appointment.status !== "cancelled" &&
             appointment.status !== "done" && (
-              <div className="update-button" onClick={updateStatus}>
+              <div
+                className={`update-button ${disableOlderDate(
+                  appointment.date
+                )}`}
+                onClick={
+                  disableOlderDate(appointment.date) ? () => {} : updateStatus
+                }
+              >
                 <i className={`bx bxs-right-arrow-square next-status`} />
                 <span className="tooltip next">Update to next status</span>
               </div>

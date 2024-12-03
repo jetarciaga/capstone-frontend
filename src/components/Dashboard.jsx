@@ -10,6 +10,13 @@ const Dashboard = () => {
   const [appointments, setAppointments] = useState([]);
   const [selectedAppointment, setSelectedAppointment] = useState(null);
 
+  const fetchAppointments = () => {
+    api
+      .get("appointments/")
+      .then((response) => setAppointments(response.data))
+      .catch((error) => console.error(error));
+  };
+
   const filterDate = (e) => {
     api
       .get(`appointments/?date=${e.target.value}`)
@@ -21,10 +28,7 @@ const Dashboard = () => {
     if (e) {
       e.target.value = "";
     }
-    api
-      .get("appointments/")
-      .then((response) => setAppointments(response.data))
-      .catch((error) => console.error(error));
+    fetchAppointments();
   };
 
   useEffect(() => {
@@ -38,7 +42,7 @@ const Dashboard = () => {
           .catch((err) => console.error(err));
       } else {
         document.getElementById("date").value = "";
-        fetchAllAppointments();
+        fetchAppointments();
       }
     }
   }, [user]);
@@ -53,7 +57,10 @@ const Dashboard = () => {
     <div className="dashboard">
       <h1 style={{ alignSelf: "flex-start" }}>Featured Appointment</h1>
       <hr />
-      <AppointmentDetails appointment={selectedAppointment} />
+      <AppointmentDetails
+        appointment={selectedAppointment}
+        refreshAppointments={fetchAppointments}
+      />
       <div className="appointment-header">
         <h1>List of Appointments ({appointments.length})</h1>
         <label htmlFor="date">
