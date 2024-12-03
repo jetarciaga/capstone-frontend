@@ -5,15 +5,16 @@ import withReactContent from "sweetalert2-react-content";
 import Calendar from "./Calendar";
 import api from "./api";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthProvider";
 
 const MySwal = withReactContent(Swal);
 
 const Appointment = () => {
-  const user = localStorage.getItem("user");
+  const { user } = useAuth();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    user: user ? JSON.parse(user).id : null,
+    user: user ? user.id : null,
     date: new Date().toISOString().slice(0, 10),
     purpose: 10,
     timeslot: "",

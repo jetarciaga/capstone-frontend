@@ -38,6 +38,7 @@ export const AuthProvider = ({ children }) => {
       navigate("/dashboard");
     } catch (error) {
       console.error("Login error:", error);
+      throw new Error("Invalid credentials");
     }
   };
 

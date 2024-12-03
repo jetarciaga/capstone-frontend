@@ -1,15 +1,22 @@
 import React, { useEffect, useState } from "react";
 import api from "./api";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 import "./AppointmentDetails.scss";
 import { convertDate, convertTime } from "../utils/scheduleHelpers";
 import { sortHistoryByTimestamp } from "../utils/statHistoryHelper";
 import { useAuth } from "../context/AuthProvider";
+import { useNavigate } from "react-router-dom";
+
+const MySwal = withReactContent(Swal);
 
 const AppointmentDetails = ({ appointment }) => {
+  const navigate = useNavigate();
   const { user } = useAuth();
   const [requirements, setRequirements] = useState(null);
   const [appointmentUser, setAppointmentUser] = useState("");
   const [showHistory, setShowHistory] = useState(false);
+  const [refresh, setRefresh] = useState(false);
 
   const toggleHistory = () => {
     setShowHistory(!showHistory);
@@ -27,30 +34,95 @@ const AppointmentDetails = ({ appointment }) => {
         .then((response) => setRequirements(response.data))
         .catch((error) => console.error(error));
     }
-  }, [appointment]);
+  }, [appointment, refresh]);
+
+  const updateStatus = async () => {
+    const mapping = {
+      pending: "ongoing",
+      ongoing: "done",
+    };
+
+    try {
+      const result = await MySwal.fire({
+        title: "Update appointment status?",
+        text: "Appointment will proceed to next step",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, update it!",
+      });
+      if (result.isConfirmed) {
+        const response = await api.patch(`appointments/${appointment.id}/`, {
+          status: mapping[appointment.status],
+        });
+        console.log("success:", response.data);
+      }
+    } catch (error) {
+      console.error("Error updating appointment:", error);
+      await MySwal.fire(
+        "Error",
+        "There was a problem updating the appointment",
+        "error"
+      );
+    }
+  };
+
+  const cancelAppointment = async () => {
+    try {
+      const result = await MySwal.fire({
+        title: "Cancel this appointment?",
+        text: "You won't be able to revet this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, cancel it!",
+      });
+
+      if (result.isConfirmed) {
+        const response = await api.patch(`appointments/${appointment.id}/`, {
+          status: "cancelled",
+        });
+        console.log("success:", response.data);
+        navigate("/dashboard", { replace: true });
+      }
+    } catch (error) {
+      console.error("Error cancelling appointment:", error);
+      await MySwal.fire(
+        "Error",
+        "There was a problem cancelling the appointment",
+        "error"
+      );
+    }
+  };
 
   if (!appointment) {
-    return <p>Loading...</p>;
+    return <h1 style={{ textAlign: "center" }}>No appointments for today!</h1>;
   }
 
   return (
     <div className="appointment-details">
       <div className="appointment-status">
         <div className="status">
-          {user.is_staff && (
-            <div className="update-button">
-              <i className="bx bxs-x-square cancel-appointment" />
-              <span className="tooltip cancel">Cancel this appointment</span>
-            </div>
-          )}
+          {user.is_staff &&
+            appointment.status !== "cancelled" &&
+            appointment.status !== "done" && (
+              <div className="update-button" onClick={cancelAppointment}>
+                <i className="bx bxs-x-square cancel-appointment" />
+                <span className="tooltip cancel">Cancel this appointment</span>
+              </div>
+            )}
           <h1>{appointment.status.toUpperCase()}</h1>
           {/* <p>{JSON.stringify(user)}</p> */}
-          {user.is_staff && (
-            <div className="update-button">
-              <i className={`bx bxs-right-arrow-square next-status`} />
-              <span className="tooltip next">Update to next status</span>
-            </div>
-          )}
+          {user.is_staff &&
+            appointment.status !== "cancelled" &&
+            appointment.status !== "done" && (
+              <div className="update-button" onClick={updateStatus}>
+                <i className={`bx bxs-right-arrow-square next-status`} />
+                <span className="tooltip next">Update to next status</span>
+              </div>
+            )}
         </div>
         <p onClick={toggleHistory}>
           {showHistory ? "<< go back" : "see history..."}

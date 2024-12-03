@@ -11,6 +11,8 @@ const Login = () => {
     password: "",
   });
 
+  const [errorMessage, setErrorMessage] = useState("");
+
   const handleChange = (e) => {
     setCredentials({
       ...credentials,
@@ -20,7 +22,11 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await login(credentials);
+    try {
+      await login(credentials);
+    } catch (error) {
+      setErrorMessage("Invalid email or password. Please try again.");
+    }
   };
 
   const handleClick = () => {
@@ -50,6 +56,7 @@ const Login = () => {
           onChange={handleChange}
           placeholder="Password"
         />
+        {errorMessage && <p className="error-message">{errorMessage}</p>}
         <button type="submit">Login</button>
         <a href="#" className="forgot-password">
           Forgot password?

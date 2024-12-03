@@ -1,6 +1,13 @@
 @import "../styles/variables/";
 @import "../styles/mixins";
 
+.error-message {
+  color: $primary-color;
+  font-size: 1.5em;
+  text-align: center;
+  margin-bottom: 0.5em;
+}
+
 .appointment-details {
   padding: 1.5em;
   display: flex;
