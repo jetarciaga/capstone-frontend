@@ -6,12 +6,10 @@ import "./AppointmentDetails.scss";
 import { convertDate, convertTime } from "../utils/scheduleHelpers";
 import { sortHistoryByTimestamp } from "../utils/statHistoryHelper";
 import { useAuth } from "../context/AuthProvider";
-import { useNavigate } from "react-router-dom";
 
 const MySwal = withReactContent(Swal);
 
 const AppointmentDetails = ({ appointment, refreshAppointments }) => {
-  const navigate = useNavigate();
   const { user } = useAuth();
   const [requirements, setRequirements] = useState(null);
   const [appointmentUser, setAppointmentUser] = useState("");

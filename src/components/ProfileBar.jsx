@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 import "./ProfileBar.scss";
 import { useAuth } from "../context/AuthProvider";
 import api from "./api";
+import { handleExternalLinks } from "../utils/externalLinks";
 
 const ProfileBar = () => {
   const { logout, accessToken } = useAuth();
@@ -80,9 +81,21 @@ const ProfileBar = () => {
       </ul>
       <div className="copyright">
         <div className="social">
-          <i className="bx bxl-facebook-circle" />
+          <i
+            className="bx bxl-facebook-circle"
+            onClick={() => {
+              handleExternalLinks(
+                "https://www.facebook.com/putatanmuntinlupa.official"
+              );
+            }}
+          />
           <i className="bx bxl-instagram-alt" />
-          <i className="bx bxl-twitter" />
+          <i
+            className="bx bxl-twitter"
+            onClick={() => {
+              handleExternalLinks("https://x.com/OFFICIALMUNTI/");
+            }}
+          />
         </div>
         <p>&copy; 2024 PLMun Students Capstone.</p>
         <p>All rights reserved.</p>
