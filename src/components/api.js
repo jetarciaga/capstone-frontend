@@ -18,6 +18,8 @@ const refreshAccessToken = async () => {
     return access;
   } catch (error) {
     console.error("Error refreshing access token", error);
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
     throw error;
   }
 };

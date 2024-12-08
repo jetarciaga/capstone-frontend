@@ -2,6 +2,10 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Signup.scss";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+
+const MySwal = withReactContent(Swal);
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -30,12 +34,22 @@ const Signup = () => {
         "http://localhost:8000/auth/users/",
         formData
       );
-      navigate("/");
+      MySwal.fire({
+        icon: "success",
+        title: "User created successfully!",
+        showConfirmButton: false,
+        timer: 2000,
+      }).then(() => {
+        navigate("/");
+      });
       console.log("Signup success:", response.data);
     } catch (error) {
       console.log("Signup error:", error.response);
-    } finally {
-      console.log("pass");
+      MySwal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Failed to create user. Please try again.",
+      });
     }
   };
 

@@ -33,6 +33,15 @@ const Appointment = () => {
         showConfirmButton: false,
         timer: 2000,
       }).then(() => {
+        api.post("email/on_create", {
+          recipient: user.email,
+          user: user.firstname + " " + user.lastname,
+          status: "pending",
+          document: formData.purpose,
+          time: formData.timeslot,
+          date: formData.date,
+          requirements,
+        });
         navigate("/dashboard");
       });
     } catch (error) {
@@ -133,11 +142,6 @@ const Appointment = () => {
                 ))}
             </ul>
           </div>
-          {/* <input
-          type="date"
-          value={appointmentDate.toISOString().slice(0, 10)}
-          onChange={() => {}}
-        /> */}
           <div className="input-group">
             <label htmlFor="timeslot">Choose available time:</label>
             <select id="timeslot" name="timeslot" onChange={handleChange}>
