@@ -93,7 +93,7 @@ const AppointmentDetails = ({ appointment, refreshAppointments }) => {
           status: "cancelled",
         });
         console.log("success:", response.data);
-        const email = await api.post("email/on_cancel", {
+        await api.post("email/on_cancel", {
           recipient: appointmentUser.email,
           user: user.firstname + " " + user.lastname,
           status: "cancelled",
