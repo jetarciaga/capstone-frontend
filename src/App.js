@@ -1,25 +1,19 @@
 import "./App.css";
-import { useState, useEffect } from "react";
 import Dashboard from "./components/Dashboard";
 import Login from "./components/Login";
-import Logout from "./components/Logout";
 import Signup from "./components/Signup";
 import ProfileBar from "./components/ProfileBar";
 import Residents from "./components/Residents";
 
 import PrivateRoute from "./routes/PrivateRoute";
-import { Route, Routes, Navigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import PublicRoute from "./routes/PublicRoute";
 import { useAuth } from "./context/AuthProvider";
 import Navbar from "./components/Navbar";
-import Calendar from "./components/Calendar";
 import Appointment from "./components/Appointment";
-import api from "./components/api";
-import AppointmentDetails from "./components/AppointmentDetails";
 
 const App = () => {
   const auth = useAuth();
-  const [loading, setLoading] = useState(false);
 
   return (
     <main

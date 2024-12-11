@@ -1,11 +1,11 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthProvider";
 import api from "./api";
 import "./Navbar.scss";
 import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
-  const { accessToken, logout, user } = useAuth();
+  const { accessToken, user } = useAuth();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
 
