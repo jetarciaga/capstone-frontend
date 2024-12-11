@@ -20,6 +20,10 @@ jobs:
 
       - name: Install Dependencies
         run: |
+          npm i --legacy-peer-deps
+
+      - name: Build React App
+        run: |
           npm run build
 
       - name: Deploy to AWS S3
