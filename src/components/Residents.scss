@@ -1,0 +1,44 @@
+@import "../styles/variables/";
+@import "../styles/mixins";
+
+.residents-container {
+  display: flex;
+  //   align-items: center;
+  align-content: center;
+  flex-direction: column;
+  .user-table {
+    .header {
+      padding: 1em 0;
+      border-bottom: 1px solid $primary-color;
+      p {
+        text-align: center;
+        font-weight: bold;
+        text-transform: uppercase;
+      }
+    }
+    .row {
+      display: flex;
+      width: 700px;
+      flex-wrap: nowrap;
+      column-gap: 2em;
+      font-size: 1.3em;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      padding: 1em 0;
+      overflow-x: hidden;
+
+      &:nth-child(even) {
+        background-color: $light-color;
+      }
+
+      p {
+        text-align: center;
+        width: 150px;
+        word-break: break-all;
+      }
+      //   max-width: 100px;
+
+      //   flex-direction: column;
+    }
+  }
+}

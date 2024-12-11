@@ -5,7 +5,7 @@ import "./Navbar.scss";
 import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
-  const { accessToken, logout } = useAuth();
+  const { accessToken, logout, user } = useAuth();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -50,6 +50,16 @@ const Navbar = () => {
           <i className="bx bxs-calendar" />
           <span>Schedule Appointment</span>
         </li>
+        {user && user.is_staff && (
+          <li
+            onClick={() => {
+              navigate("/residents");
+            }}
+          >
+            <i className="bx bxs-user-account" />
+            <span>Residents</span>
+          </li>
+        )}
       </ul>
     </nav>
   );

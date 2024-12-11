@@ -5,6 +5,7 @@ import Login from "./components/Login";
 import Logout from "./components/Logout";
 import Signup from "./components/Signup";
 import ProfileBar from "./components/ProfileBar";
+import Residents from "./components/Residents";
 
 import PrivateRoute from "./routes/PrivateRoute";
 import { Route, Routes, Navigate } from "react-router-dom";
@@ -66,7 +67,16 @@ const App = () => {
             </PrivateRoute>
           }
         />
+        <Route
+          path="/residents"
+          element={
+            <PrivateRoute>
+              <Residents />
+            </PrivateRoute>
+          }
+        />
       </Routes>
+
       {auth.isAuthenticated && <ProfileBar />}
     </main>
   );
