@@ -33,4 +33,4 @@ jobs:
           AWS_REGION: ${{ secrets.AWS_REGION }}
           S3_BUCKET: ${{ secrets.S3_BUCKET }}
         run: |
-          aws s3 sync ./build s3://{{ $S3_BUCKET }} --delete --cache-control "no-store, no-cache, must-revalidate, proxy-revalidate"
+          aws s3 sync ./build s3://${{ S3_BUCKET }} --delete --cache-control "no-store, no-cache, must-revalidate, proxy-revalidate"
