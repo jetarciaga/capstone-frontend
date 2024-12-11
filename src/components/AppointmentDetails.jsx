@@ -53,7 +53,7 @@ const AppointmentDetails = ({ appointment, refreshAppointments }) => {
         const response = await api.patch(`appointments/${appointment.id}/`, {
           status: mapping[appointment.status],
         });
-        const email = await api.post("email/on_update", {
+        await api.post("email/on_update", {
           recipient: appointmentUser.email,
           user: user.firstname + " " + user.lastname,
           status: mapping[appointment.status],

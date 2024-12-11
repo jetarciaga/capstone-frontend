@@ -58,7 +58,7 @@ const Login = () => {
         />
         {errorMessage && <p className="error-message">{errorMessage}</p>}
         <button type="submit">Login</button>
-        <a href="#" className="forgot-password">
+        <a href="www.google.com" className="forgot-password">
           Forgot password?
         </a>
         <hr />

@@ -54,11 +54,11 @@ const Appointment = () => {
     }
   };
 
-  const [appointmentDate, setAppointmentDate] = useState(new Date());
-  const setAppointmentFromCalendar = useCallback(
-    (date) => setAppointmentDate(date).toISOString().slice(0, 10),
-    []
-  );
+  // const [appointmentDate, setAppointmentDate] = useState(new Date());
+  // const setAppointmentFromCalendar = useCallback(
+  //   (date) => setAppointmentDate(date).toISOString().slice(0, 10),
+  //   []
+  // );
   const [timeslots, setTimeslots] = useState([]);
   const setTimeslotsFromDate = useCallback(
     (timeslots) => setTimeslots(timeslots.available_slots),
