@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import "./Signup.scss";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import api from "./api";
 import axios from "axios";
 
 const MySwal = withReactContent(Swal);
