@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
 import "./Signup.scss";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import api from "./api";
 
 const MySwal = withReactContent(Swal);
 
@@ -30,10 +30,7 @@ const Signup = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post(
-        "http://localhost:8000/auth/users/",
-        formData
-      );
+      const response = await api.post("auth/users/", formData);
       MySwal.fire({
         icon: "success",
         title: "User created successfully!",
