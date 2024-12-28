@@ -16,7 +16,7 @@ const Appointment = () => {
   const [formData, setFormData] = useState({
     user: user ? user.id : null,
     date: new Date().toISOString().slice(0, 10),
-    purpose: 10,
+    purpose: 1,
     timeslot: "",
     status: "pending",
   });
