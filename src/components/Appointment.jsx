@@ -26,11 +26,7 @@ const Appointment = () => {
     try {
       const response = await api.post("appointments/", formData);
       console.log("success:", response.data);
-      console.log("HERE");
-      console.log(response.data);
-      console.log(JSON.stringify(response.data));
       const reference_no = response.data.data.reference_no;
-      console.log(reference_no);
 
       MySwal.fire({
         icon: "success",
