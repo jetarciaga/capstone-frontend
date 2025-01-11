@@ -55,6 +55,7 @@ const AppointmentDetails = ({ appointment, refreshAppointments }) => {
         });
         await api.post("email/on_update", {
           recipient: appointmentUser.email,
+          reference_number: response.data.reference_no,
           user: user.firstname + " " + user.lastname,
           status: mapping[appointment.status],
           document: appointment.purpose,
@@ -95,6 +96,7 @@ const AppointmentDetails = ({ appointment, refreshAppointments }) => {
         console.log("success:", response.data);
         await api.post("email/on_cancel", {
           recipient: appointmentUser.email,
+          reference_number: response.data.reference_no,
           user: user.firstname + " " + user.lastname,
           status: "cancelled",
           document: appointment.purpose,

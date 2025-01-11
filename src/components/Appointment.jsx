@@ -35,6 +35,7 @@ const Appointment = () => {
       }).then(() => {
         api.post("email/on_create", {
           recipient: user.email,
+          reference_number: response.data.reference_no,
           user: user.firstname + " " + user.lastname,
           status: "pending",
           document: formData.purpose,
