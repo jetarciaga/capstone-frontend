@@ -29,6 +29,8 @@ const Appointment = () => {
       console.log("HERE");
       console.log(response.data);
       console.log(JSON.stringify(response.data));
+      const reference_no = response.data.data.reference_no;
+      console.log(reference_no);
 
       MySwal.fire({
         icon: "success",
@@ -38,7 +40,7 @@ const Appointment = () => {
       }).then(() => {
         api.post("email/on_create", {
           recipient: user.email,
-          reference_number: response.data.data.reference_no,
+          reference_number: reference_no,
           user: user.firstname + " " + user.lastname,
           status: "pending",
           document: formData.purpose,
