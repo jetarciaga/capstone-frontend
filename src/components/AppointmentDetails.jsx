@@ -191,6 +191,11 @@ const AppointmentDetails = ({ appointment, refreshAppointments }) => {
         <div className="appointment-information">
           <ul>
             <li className="info-group">
+              <h2>Reference Number</h2>
+              <span>:</span>
+              <p>{appointment.reference_no}</p>
+            </li>
+            <li className="info-group">
               <h2>Purpose</h2>
               <span>:</span>
               <p>{appointment.purpose_name}</p>
