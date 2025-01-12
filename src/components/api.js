@@ -1,8 +1,7 @@
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 
-const API_URL =
-  "http://ec2-13-215-222-173.ap-southeast-1.compute.amazonaws.com:8000/api/";
+const API_URL = "127.0.0.1:8000/api/";
 
 const api = axios.create({
   baseURL: API_URL,
