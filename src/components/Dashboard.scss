@@ -11,7 +11,38 @@
   .appointment-header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-end;
+
+    .filter-wrapper {
+      display: flex;
+      flex-direction: column;
+      row-gap: 0.5em;
+      align-items: flex-end;
+
+      .filter-selection {
+        margin-right: 2em;
+        display: flex;
+        column-gap: 1em;
+        font-size: 1.5em;
+        align-items: center;
+
+        select {
+          font-family: "Comfortaa", "Roboto", sans-serif;
+          width: 175px;
+          padding: 0.3em 0.2em;
+        }
+        p {
+          text-align: center;
+        }
+      }
+    }
+
+    .filterResult {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      row-gap: 1em;
+    }
 
     label {
       display: flex;
@@ -26,6 +57,9 @@
         font-family: "Comfortaa", "Roboto", sans-serif;
         width: 140px;
         padding: 0.3em 0.2em;
+      }
+      input[type="text"] {
+        text-transform: uppercase;
       }
     }
   }

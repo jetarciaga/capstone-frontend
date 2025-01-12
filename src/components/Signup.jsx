@@ -30,7 +30,10 @@ const Signup = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("127.0.0.1:8000/auth/users/", formData);
+      const response = await axios.post(
+        "http://localhost:8000/auth/users/",
+        formData
+      );
       MySwal.fire({
         icon: "success",
         title: "User created successfully!",

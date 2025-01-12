@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import api from "./api";
 import { useAuth } from "../context/AuthProvider";
 import "./Dashboard.scss";
@@ -9,6 +9,11 @@ const Dashboard = () => {
   const { user } = useAuth();
   const [appointments, setAppointments] = useState([]);
   const [selectedAppointment, setSelectedAppointment] = useState(null);
+  const [selectedFilter, setSelectedFilter] = useState("date");
+
+  const handleFilterSelection = (e) => {
+    setSelectedFilter(e.target.value);
+  };
 
   const fetchAppointments = () => {
     api
@@ -20,6 +25,13 @@ const Dashboard = () => {
   const filterDate = (e) => {
     api
       .get(`appointments/?date=${e.target.value}`)
+      .then((response) => setAppointments(response.data))
+      .catch((error) => console.error(error));
+  };
+
+  const filterReferenceNo = (e) => {
+    api
+      .get(`appointments/?reference_number=${e.target.value}`)
       .then((response) => setAppointments(response.data))
       .catch((error) => console.error(error));
   };
@@ -63,12 +75,35 @@ const Dashboard = () => {
       />
       <div className="appointment-header">
         <h1>List of Appointments ({appointments.length})</h1>
-        <label htmlFor="date">
-          <p>Filter by date </p>
+        <div className="filter-wrapper">
+          <div className="filter-selection">
+            <p>Filter by:</p>
+            <select value={selectedFilter} onChange={handleFilterSelection}>
+              <option value="reference_number">Reference Number</option>
+              <option value="date">Date</option>
+            </select>
+          </div>
 
-          <input type="date" id="date" onChange={filterDate} />
-          <i className="bx bx-x" onClick={fetchAllAppointments} />
-        </label>
+          <div className="filterResult">
+            {selectedFilter === "reference_number" && (
+              <label htmlFor="reference_number">
+                <input
+                  type="text"
+                  id="reference_number"
+                  onChange={filterReferenceNo}
+                />
+                <i className="bx bx-x" onClick={fetchAllAppointments} />
+              </label>
+            )}
+
+            {selectedFilter === "date" && (
+              <label htmlFor="date">
+                <input type="date" id="date" onChange={filterDate} />
+                <i className="bx bx-x" onClick={fetchAllAppointments} />
+              </label>
+            )}
+          </div>
+        </div>
       </div>
       <hr />
       <div className="appointments-container">
