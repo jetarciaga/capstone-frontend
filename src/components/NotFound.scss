@@ -1,0 +1,27 @@
+@import "../styles/variables/";
+@import "../styles/mixins";
+
+.page-container {
+  margin-top: 2em;
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+  row-gap: 1em;
+  h1 {
+    font-size: 2em;
+  }
+  .page-body {
+    display: flex;
+    flex-direction: column;
+    row-gap: 2em;
+    text-align: center;
+    margin-top: 2em;
+
+    h2 {
+      font-size: 2em;
+    }
+    h3 {
+      font-size: 1.5em;
+    }
+  }
+}
