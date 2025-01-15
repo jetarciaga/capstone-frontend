@@ -3,8 +3,10 @@ import "./ProfileBar.scss";
 import { useAuth } from "../context/AuthProvider";
 import api from "./api";
 import { handleExternalLinks } from "../utils/externalLinks";
+import { useNavigate } from "react-router-dom";
 
 const ProfileBar = () => {
+  const navigate = useNavigate();
   const { logout, accessToken } = useAuth();
   const [user, setUser] = useState({
     firstname: "",
@@ -59,7 +61,7 @@ const ProfileBar = () => {
         </button>
         {isOpen && (
           <ul className="dropdown-menu">
-            <li>Settings</li>
+            <li onClick={() => navigate("/user-profile")}>My Profile</li>
             <li onClick={() => logout()}>Logout</li>
           </ul>
         )}
@@ -74,9 +76,15 @@ const ProfileBar = () => {
           <i className="bx bxs-award" />
           Careers
         </li>
-        <li>
+        <li
+          onClick={() => {
+            handleExternalLinks(
+              "https://muntinlupacity.gov.ph/barangays/brgy-putatan/"
+            );
+          }}
+        >
           <i className="bx bxs-user-voice" />
-          Contact Us
+          About Us
         </li>
       </ul>
       <div className="copyright">
@@ -89,7 +97,7 @@ const ProfileBar = () => {
               );
             }}
           />
-          <i className="bx bxl-instagram-alt" />
+          <i className="bx bxl-instagram-alt disabled" />
           <i
             className="bx bxl-twitter"
             onClick={() => {

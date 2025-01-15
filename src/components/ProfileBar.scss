@@ -55,6 +55,14 @@
       column-gap: 1em;
       margin-bottom: 1em;
 
+      .disabled {
+        cursor: not-allowed;
+        color: rgba(0, 0, 0, 0.5);
+        &:hover {
+          color: rgba(0, 0, 0, 0.5);
+        }
+      }
+
       i {
         color: $primary-color;
         cursor: pointer;

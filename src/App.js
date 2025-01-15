@@ -11,6 +11,7 @@ import PublicRoute from "./routes/PublicRoute";
 import { useAuth } from "./context/AuthProvider";
 import Navbar from "./components/Navbar";
 import Appointment from "./components/Appointment";
+import UserProfile from "./components/UserProfile";
 
 const App = () => {
   const auth = useAuth();
@@ -66,6 +67,15 @@ const App = () => {
           element={
             <PrivateRoute>
               <Residents />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/user-profile"
+          element={
+            <PrivateRoute>
+              <UserProfile />
             </PrivateRoute>
           }
         />

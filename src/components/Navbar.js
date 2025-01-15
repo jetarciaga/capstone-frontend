@@ -32,7 +32,7 @@ const Navbar = () => {
 
   return (
     <nav>
-      <h2>Barangay Putatan Online Appointment System</h2>
+      <h2>Barangay Putatan E-Serbisyo Online Appointment System</h2>
       <ul>
         <li
           onClick={() => {
@@ -57,7 +57,7 @@ const Navbar = () => {
             }}
           >
             <i className="bx bxs-user-account" />
-            <span>Residents</span>
+            <span>Resident's Record</span>
           </li>
         )}
       </ul>
