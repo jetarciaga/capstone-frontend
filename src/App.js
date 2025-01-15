@@ -12,6 +12,7 @@ import { useAuth } from "./context/AuthProvider";
 import Navbar from "./components/Navbar";
 import Appointment from "./components/Appointment";
 import UserProfile from "./components/UserProfile";
+import NotFound from "./components/NotFound";
 
 const App = () => {
   const auth = useAuth();
@@ -79,6 +80,8 @@ const App = () => {
             </PrivateRoute>
           }
         />
+
+        <Route path="*" element={<NotFound />} />
       </Routes>
 
       {auth.isAuthenticated && <ProfileBar />}

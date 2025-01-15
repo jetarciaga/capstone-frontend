@@ -68,11 +68,19 @@ const ProfileBar = () => {
       </div>
       <hr />
       <ul className="right-navbar">
-        <li>
+        <li
+          onClick={() => {
+            navigate("/announcements");
+          }}
+        >
           <i className="bx bxs-megaphone" />
           Announcements
         </li>
-        <li>
+        <li
+          onClick={() => {
+            navigate("/careers");
+          }}
+        >
           <i className="bx bxs-award" />
           Careers
         </li>
