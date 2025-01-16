@@ -11,7 +11,6 @@ const MySwal = withReactContent(Swal);
 const UserProfile = () => {
   const [editMode, setEditMode] = useState(false);
   const { id } = useParams();
-  const navigate = useNavigate();
 
   const [userData, setUserData] = useState({});
 

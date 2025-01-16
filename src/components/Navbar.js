@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const { accessToken, user } = useAuth();
-  const [data, setData] = useState(null);
+  // const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
@@ -15,7 +15,7 @@ const Navbar = () => {
     const fetchData = async () => {
       try {
         const response = await api.get("api/users/");
-        setData(response.data);
+        // setData(response.data);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
