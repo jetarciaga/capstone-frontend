@@ -14,7 +14,7 @@ const Navbar = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await api.get("api/users/");
+        await api.get("api/users/");
         // setData(response.data);
         setLoading(false);
       } catch (error) {
