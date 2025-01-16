@@ -17,21 +17,21 @@ const Dashboard = () => {
 
   const fetchAppointments = () => {
     api
-      .get("appointments/")
+      .get("api/appointments/")
       .then((response) => setAppointments(response.data))
       .catch((error) => console.error(error));
   };
 
   const filterDate = (e) => {
     api
-      .get(`appointments/?date=${e.target.value}`)
+      .get(`api/appointments/?date=${e.target.value}`)
       .then((response) => setAppointments(response.data))
       .catch((error) => console.error(error));
   };
 
   const filterReferenceNo = (e) => {
     api
-      .get(`appointments/?reference_number=${e.target.value}`)
+      .get(`api/appointments/?reference_number=${e.target.value}`)
       .then((response) => setAppointments(response.data))
       .catch((error) => console.error(error));
   };
@@ -49,7 +49,7 @@ const Dashboard = () => {
         const today = new Date().toISOString().split("T")[0];
         document.getElementById("date").value = today;
         api
-          .get(`appointments/?date=${today}`)
+          .get(`api/appointments/?date=${today}`)
           .then((response) => setAppointments(response.data))
           .catch((err) => console.error(err));
       } else {

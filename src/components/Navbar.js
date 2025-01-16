@@ -14,7 +14,7 @@ const Navbar = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await api.get("users/");
+        const response = await api.get("api/users/");
         setData(response.data);
         setLoading(false);
       } catch (error) {
@@ -28,7 +28,6 @@ const Navbar = () => {
   }, [accessToken]);
 
   if (loading) return <p> Loading...</p>;
-  console.log(data);
 
   return (
     <nav>

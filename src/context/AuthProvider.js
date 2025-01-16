@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import api from "../components/api";
+import api, { fetchCsrfToken } from "../components/api";
 import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext();
@@ -16,7 +16,7 @@ export const AuthProvider = ({ children }) => {
 
   const fetchUserDetails = async (token) => {
     try {
-      const response = await api.get("users/", {
+      const response = await api.get("api/users/", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setUser(response.data);
@@ -27,7 +27,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (credentials) => {
     try {
-      const response = await api.post("token/", credentials);
+      const response = await api.post("api/token/", credentials);
       const { access, refresh } = response.data;
 
       localStorage.setItem("accessToken", access);
@@ -45,7 +45,7 @@ export const AuthProvider = ({ children }) => {
   const logout = async () => {
     try {
       const refresh = localStorage.getItem("refreshToken");
-      await api.post("token/blacklist/", { refresh });
+      await api.post("api/token/blacklist/", { refresh });
       localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");
       setAccessToken(null);
@@ -57,6 +57,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
+    fetchCsrfToken();
     if (accessToken) {
       fetchUserDetails(accessToken);
     }

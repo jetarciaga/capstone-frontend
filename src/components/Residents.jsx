@@ -3,14 +3,16 @@ import "./Residents.scss";
 import { useEffect, useState } from "react";
 import api from "./api";
 import { convertDate } from "../utils/scheduleHelpers";
+import { useNavigate } from "react-router-dom";
 
 const Residents = () => {
+  const navigate = useNavigate();
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await api.get("users/?all=true");
+        const response = await api.get("api/users/?all=true");
         setUsers(response.data);
       } catch (error) {
         console.error(error);
@@ -31,8 +33,19 @@ const Residents = () => {
         </div>
         {users.map((user, index) => (
           <div className="row" key={index}>
-            <p>{user.firstname + " " + user.lastname}</p>
-            <p>{user.email}</p>
+            <p
+              className="user-details"
+              onClick={() => navigate(`/user-profile/${user.id}`)}
+            >
+              {console.log(user.id)}
+              {user.firstname + " " + user.lastname}
+            </p>
+            <p
+              className="user-details"
+              onClick={() => navigate(`/user-profile/${user.id}`)}
+            >
+              {user.email}
+            </p>
             <p>{convertDate(user.birthday)}</p>
             <p>{convertDate(user.date_joined)}</p>
           </div>

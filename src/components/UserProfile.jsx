@@ -1,22 +1,40 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./UserProfile.scss";
 import api from "./api";
+import { useParams } from "react-router-dom";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+import { useNavigate } from "react-router-dom";
+
+const MySwal = withReactContent(Swal);
 
 const UserProfile = () => {
   const [editMode, setEditMode] = useState(false);
+  const { id } = useParams();
+  const navigate = useNavigate();
 
-  const mockData = {
-    firstname: "Jethro",
-    middlename: "Gonzaga",
-    lastname: "Arciaga",
-    address: "212 San Guillermo Street, Putatan Muntinlupa City",
-    civil_status: "Married",
-    mobile: "+639610059847",
-    email: "arciagajethro_bsit@plmun.edu.ph",
-  };
+  const [userData, setUserData] = useState({});
+
+  useEffect(() => {
+    api
+      .get(`api/users/${id}/`)
+      .then((response) => {
+        console.log(response.data);
+        setUserData({
+          firstname: response.data.firstname,
+          middlename: response.data.profile.middlename,
+          lastname: response.data.lastname,
+          address: response.data.profile.address,
+          civil_status: response.data.profile.civil_status,
+          mobile: response.data.profile.mobile,
+          email: response.data.email,
+        });
+      })
+      .catch((err) => console.error(err));
+  }, [id]);
 
   const [formData, setFormData] = useState({
-    ...mockData,
+    ...userData,
   });
 
   const handleChange = (e) => {
@@ -27,10 +45,42 @@ const UserProfile = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setEditMode((editMode) => !editMode);
-    console.log("Sample");
+    try {
+      const result = await MySwal.fire({
+        title: "Update user profile?",
+        text: "This will change your data",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, update it!",
+      });
+      if (result.isConfirmed) {
+        const response = await api.patch(`api/users/${id}/`, {
+          firstname: formData.firstname,
+          lastname: formData.lastname,
+          email: formData.email,
+          profile: {
+            middlename: formData.middlename,
+            civil_status: formData.civil_status,
+            address: formData.address,
+            mobile: formData.mobile,
+          },
+        });
+        console.log("success", response.data);
+        setEditMode((editMode) => !editMode);
+        window.location.reload();
+      }
+    } catch (error) {
+      console.error("Error updating user profile:", error);
+      await MySwal.fire(
+        "Error",
+        "Something went wrong while updating the user",
+        "error"
+      );
+    }
   };
 
   const toggleEdit = (e) => {
@@ -45,14 +95,14 @@ const UserProfile = () => {
       <form className="user-container">
         <div className="user-data">
           {!editMode ? (
-            <span className="user-info">{mockData.firstname}</span>
+            <span className="user-info">{userData.firstname}</span>
           ) : (
             <input
               className="user-info"
               type="text"
               name="firstname"
               value={formData.firstname}
-              placeholder={mockData.firstname}
+              placeholder={userData.firstname}
               onChange={handleChange}
             />
           )}
@@ -60,14 +110,14 @@ const UserProfile = () => {
         </div>
         <div className="user-data">
           {!editMode ? (
-            <span className="user-info">{mockData.middlename}</span>
+            <span className="user-info">{userData.middlename}</span>
           ) : (
             <input
               className="user-info"
               type="text"
               name="middlename"
               value={formData.middlename}
-              placeholder={mockData.middlename}
+              placeholder={userData.middlename}
               onChange={handleChange}
             />
           )}
@@ -75,14 +125,14 @@ const UserProfile = () => {
         </div>
         <div className="user-data">
           {!editMode ? (
-            <span className="user-info">{mockData.lastname}</span>
+            <span className="user-info">{userData.lastname}</span>
           ) : (
             <input
               className="user-info"
               type="text"
               name="lastname"
               value={formData.lastname}
-              placeholder={mockData.lastname}
+              placeholder={userData.lastname}
               onChange={handleChange}
             />
           )}
@@ -90,29 +140,35 @@ const UserProfile = () => {
         </div>
         <div className="user-data">
           {!editMode ? (
-            <span className="user-info">{mockData.civil_status}</span>
+            <span className="user-info">{userData.civil_status}</span>
           ) : (
-            <input
+            <select
               className="user-info"
-              type="text"
               name="civil_status"
               value={formData.civil_status}
-              placeholder={mockData.civil_status}
               onChange={handleChange}
-            />
+            >
+              <option value="single">Single</option>
+              <option value="married">Married</option>
+              <option value="separated">Separated</option>
+              <option value="widowed">Widowed</option>
+              <option value="in_a_civil_partnership">
+                In a civil partnership
+              </option>
+            </select>
           )}
           <span className="user-label">Civil Status</span>
         </div>
         <div className="user-data">
           {!editMode ? (
-            <span className="user-info">{mockData.address}</span>
+            <span className="user-info">{userData.address}</span>
           ) : (
             <input
               className="user-info"
               type="text"
               name="addess"
               value={formData.address}
-              placeholder={mockData.address}
+              placeholder={userData.address}
               onChange={handleChange}
             />
           )}
@@ -120,14 +176,14 @@ const UserProfile = () => {
         </div>
         <div className="user-data">
           {!editMode ? (
-            <span className="user-info">{mockData.mobile}</span>
+            <span className="user-info">{userData.mobile}</span>
           ) : (
             <input
               className="user-info"
               type="text"
               name="mobile"
               value={formData.mobile}
-              placeholder={mockData.mobile}
+              placeholder={userData.mobile}
               onChange={handleChange}
             />
           )}
@@ -135,14 +191,14 @@ const UserProfile = () => {
         </div>
         <div className="user-data">
           {!editMode ? (
-            <span className="user-info">{mockData.email}</span>
+            <span className="user-info">{userData.email}</span>
           ) : (
             <input
               className="user-info"
               type="text"
               name="email"
               value={formData.email}
-              placeholder={mockData.email}
+              placeholder={userData.email}
               onChange={handleChange}
             />
           )}

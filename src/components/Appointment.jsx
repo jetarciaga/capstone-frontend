@@ -24,7 +24,7 @@ const Appointment = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await api.post("appointments/", formData);
+      const response = await api.post("api/appointments/", formData);
       console.log("success:", response.data);
       const reference_no = response.data.data.reference_no;
 
@@ -34,7 +34,7 @@ const Appointment = () => {
         showConfirmButton: false,
         timer: 2000,
       }).then(() => {
-        api.post("email/on_create", {
+        api.post("api/email/on_create", {
           recipient: user.email,
           reference_number: reference_no,
           user: user.firstname + " " + user.lastname,
@@ -72,7 +72,7 @@ const Appointment = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await api.get("documents/");
+        const response = await api.get("api/documents/");
         setDocuments(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);

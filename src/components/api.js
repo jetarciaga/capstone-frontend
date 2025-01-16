@@ -1,12 +1,24 @@
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 
-const API_URL = "http://localhost:8000/api/";
+const API_URL = "http://localhost:8000/";
 
 const api = axios.create({
   baseURL: API_URL,
   withCredentials: true,
 });
+
+export const fetchCsrfToken = async () => {
+  try {
+    const response = await api.get("/api/csrf-token/");
+    const csrfToken = response.data.csrfToken;
+    console.log(csrfToken);
+    axios.defaults.headers.commons["X-CSRFToken"] = csrfToken; // Set globally for axios
+    console.log(axios.defaults.headers);
+  } catch (error) {
+    console.error("Failed to fetch CSRF token:", error);
+  }
+};
 
 const refreshAccessToken = async () => {
   try {

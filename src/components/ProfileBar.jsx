@@ -19,7 +19,7 @@ const ProfileBar = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await api.get("users/");
+        const response = await api.get("api/users/");
         setUser(
           Array.isArray(response.data) ? response.data[0] : response.data
         );

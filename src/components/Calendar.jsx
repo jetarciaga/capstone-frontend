@@ -71,7 +71,7 @@ const Calendar = ({ onValueChange, setDate, setTime }) => {
       );
 
       try {
-        const response = await api.post("timeslots/", {
+        const response = await api.post("api/timeslots/", {
           selected_date: new Date(currentYear, currentMonth, day + 1)
             .toISOString()
             .slice(0, 10),

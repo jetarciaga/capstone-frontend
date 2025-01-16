@@ -27,6 +27,14 @@
       padding: 1em 0;
       overflow-x: hidden;
 
+      .user-details {
+        color: $secondary-color;
+        cursor: pointer;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
       &:nth-child(even) {
         background-color: $light-color;
       }

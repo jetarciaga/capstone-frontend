@@ -22,12 +22,12 @@ const AppointmentDetails = ({ appointment, refreshAppointments }) => {
   useEffect(() => {
     if (appointment) {
       api
-        .get(`users/${appointment.user}/`)
+        .get(`api/users/${appointment.user}/`)
         .then((response) => setAppointmentUser(response.data))
         .catch((error) => console.error(error));
 
       api
-        .get(`requirements/${appointment.purpose}/`)
+        .get(`api/requirements/${appointment.purpose}/`)
         .then((response) => setRequirements(response.data))
         .catch((error) => console.error(error));
     }
@@ -50,10 +50,13 @@ const AppointmentDetails = ({ appointment, refreshAppointments }) => {
         confirmButtonText: "Yes, update it!",
       });
       if (result.isConfirmed) {
-        const response = await api.patch(`appointments/${appointment.id}/`, {
-          status: mapping[appointment.status],
-        });
-        await api.post("email/on_update", {
+        const response = await api.patch(
+          `api/appointments/${appointment.id}/`,
+          {
+            status: mapping[appointment.status],
+          }
+        );
+        await api.post("api/email/on_update", {
           recipient: appointmentUser.email,
           reference_number: appointment.reference_no,
           user: user.firstname + " " + user.lastname,
@@ -90,11 +93,14 @@ const AppointmentDetails = ({ appointment, refreshAppointments }) => {
       });
 
       if (result.isConfirmed) {
-        const response = await api.patch(`appointments/${appointment.id}/`, {
-          status: "cancelled",
-        });
+        const response = await api.patch(
+          `api/appointments/${appointment.id}/`,
+          {
+            status: "cancelled",
+          }
+        );
         console.log("success:", response.data);
-        await api.post("email/on_cancel", {
+        await api.post("api/email/on_cancel", {
           recipient: appointmentUser.email,
           reference_number: appointment.reference_no,
           user: user.firstname + " " + user.lastname,
