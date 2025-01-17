@@ -190,6 +190,13 @@
           color: #868686;
           font-weight: bold;
         }
+        .user-link {
+          color: $secondary-color;
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+
         p {
           width: 150px;
           text-align: left;

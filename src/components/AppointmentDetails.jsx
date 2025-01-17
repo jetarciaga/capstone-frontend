@@ -6,6 +6,7 @@ import "./AppointmentDetails.scss";
 import { convertDate, convertTime } from "../utils/scheduleHelpers";
 import { sortHistoryByTimestamp } from "../utils/statHistoryHelper";
 import { useAuth } from "../context/AuthProvider";
+import { useNavigate } from "react-router-dom";
 
 const MySwal = withReactContent(Swal);
 
@@ -14,6 +15,7 @@ const AppointmentDetails = ({ appointment, refreshAppointments }) => {
   const [requirements, setRequirements] = useState(null);
   const [appointmentUser, setAppointmentUser] = useState("");
   const [showHistory, setShowHistory] = useState(false);
+  const navigate = useNavigate();
 
   const toggleHistory = () => {
     setShowHistory(!showHistory);
@@ -221,7 +223,10 @@ const AppointmentDetails = ({ appointment, refreshAppointments }) => {
             <li className="info-group">
               <h2>Requested By</h2>
               <span>:</span>
-              <p>
+              <p
+                className="user-link"
+                onClick={() => navigate(`/user-profile/${appointmentUser.id}`)}
+              >
                 {appointmentUser.firstname + " " + appointmentUser.lastname}
               </p>
             </li>
