@@ -28,13 +28,10 @@ const UserProfile = () => {
     }
   };
 
-  console.log("Check here");
-  console.log(userData);
-
   useEffect(() => {
     console.log("LOOPING");
     fetchUserData();
-  });
+  }, []);
 
   const [formData, setFormData] = useState({
     ...userData,
