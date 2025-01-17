@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import api, { fetchCsrfToken } from "../components/api";
+import api from "../components/api";
 import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext();
