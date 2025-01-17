@@ -85,7 +85,7 @@ const Appointment = () => {
   const [requirements, setRequirements] = useState([]);
   useEffect(() => {
     api
-      .get(`requirements/${formData.purpose}/`)
+      .get(`api/requirements/${formData.purpose}/`)
       .then((response) => setRequirements(response.data))
       .catch((error) => console.error(error));
   }, [formData]);
