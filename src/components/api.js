@@ -11,7 +11,7 @@ const api = axios.create({
 
 export const fetchCsrfToken = async () => {
   try {
-    const response = await api.get("/api/csrf-token/");
+    const response = await api.get("api/csrf-token/");
     const csrfToken = response.data.csrfToken;
     console.log(csrfToken);
     axios.defaults.headers.commons["X-CSRFToken"] = csrfToken; // Set globally for axios
@@ -23,7 +23,7 @@ export const fetchCsrfToken = async () => {
 
 const refreshAccessToken = async () => {
   try {
-    const response = await axios.post(`${API_URL}token/refresh/`, {
+    const response = await api.post("api/token/refresh/", {
       refresh: localStorage.getItem("refreshToken"),
     });
     const { access } = response.data;
