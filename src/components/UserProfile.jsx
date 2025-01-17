@@ -13,25 +13,23 @@ const UserProfile = () => {
 
   const [userData, setUserData] = useState({});
 
-  const fetchUserData = async () => {
-    try {
-      const response = await api.get(`api/users/${id}/`);
-      console.log("Check Response");
-      console.log(response.data);
-      setUserData({
-        ...response.data,
-      });
-      console.log("fetchUserData");
-      console.log(userData.Data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   useEffect(() => {
     console.log("LOOPING");
+    const fetchUserData = async () => {
+      try {
+        const response = await api.get(`api/users/${id}/`);
+        console.log("Check Response");
+        console.log(response.data);
+        setUserData({
+          ...response.data,
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
     fetchUserData();
-  }, []);
+  }, [id]);
 
   const [formData, setFormData] = useState({
     ...userData,
