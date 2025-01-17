@@ -13,27 +13,31 @@ const UserProfile = () => {
 
   const [userData, setUserData] = useState({});
 
+  const fetchUserData = async () => {
+    try {
+      const response = await api.get(`api/users/${id}/`);
+      setUserData({
+        ...response.data,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  console.log("Check here");
+  console.log(userData);
+
   useEffect(() => {
-    api
-      .get(`api/users/${id}/`)
-      .then((response) => {
-        console.log(response.data);
-        setUserData({
-          firstname: response.data.firstname,
-          middlename: response.data.profile.middlename,
-          lastname: response.data.lastname,
-          address: response.data.profile.address,
-          civil_status: response.data.profile.civil_status,
-          mobile: response.data.profile.mobile,
-          email: response.data.email,
-        });
-      })
-      .catch((err) => console.error(err));
-  }, [id]);
+    console.log("LOOPING");
+    fetchUserData();
+  }, []);
 
   const [formData, setFormData] = useState({
     ...userData,
   });
+
+  console.log("userData");
+  console.log(userData.address);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -57,17 +61,10 @@ const UserProfile = () => {
       });
       if (result.isConfirmed) {
         const response = await api.patch(`api/users/${id}/`, {
-          firstname: formData.firstname,
-          lastname: formData.lastname,
-          email: formData.email,
-          profile: {
-            middlename: formData.middlename,
-            civil_status: formData.civil_status,
-            address: formData.address,
-            mobile: formData.mobile,
-          },
+          ...formData,
         });
         console.log("success", response.data);
+        console.log(formData);
         setEditMode((editMode) => !editMode);
         window.location.reload();
       }
@@ -164,7 +161,7 @@ const UserProfile = () => {
             <input
               className="user-info"
               type="text"
-              name="addess"
+              name="address"
               value={formData.address}
               placeholder={userData.address}
               onChange={handleChange}
@@ -196,7 +193,7 @@ const UserProfile = () => {
               type="text"
               name="email"
               value={formData.email}
-              placeholder={userData.email}
+              placeholder={[userData].email}
               onChange={handleChange}
             />
           )}

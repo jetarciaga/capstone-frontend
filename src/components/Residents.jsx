@@ -51,11 +51,6 @@ const Residents = () => {
           </div>
         ))}
       </div>
-      {/* <ul>
-        {users.map((user) => (
-          <li key={user.id}>{user.firstname + " " + user.lastname}</li>
-        ))}
-      </ul> */}
     </div>
   );
 };
