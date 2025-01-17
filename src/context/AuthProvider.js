@@ -57,7 +57,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    fetchCsrfToken();
+    // fetchCsrfToken();
     if (accessToken) {
       fetchUserDetails(accessToken);
     }
