@@ -16,9 +16,13 @@ const UserProfile = () => {
   const fetchUserData = async () => {
     try {
       const response = await api.get(`api/users/${id}/`);
+      console.log("Check Response");
+      console.log(response.data);
       setUserData({
         ...response.data,
       });
+      console.log("fetchUserData");
+      console.log(userData.Data);
     } catch (error) {
       console.error(error);
     }
@@ -30,7 +34,7 @@ const UserProfile = () => {
   useEffect(() => {
     console.log("LOOPING");
     fetchUserData();
-  }, []);
+  });
 
   const [formData, setFormData] = useState({
     ...userData,
