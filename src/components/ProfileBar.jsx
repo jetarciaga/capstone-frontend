@@ -24,7 +24,6 @@ const ProfileBar = () => {
         setUser(
           Array.isArray(response.data) ? response.data[0] : response.data
         );
-        console.log(user);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
