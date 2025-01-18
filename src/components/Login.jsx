@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useAuth } from "../context/AuthProvider";
 import "./Login.scss";
 import { useNavigate } from "react-router-dom";
+import api from "./api";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -12,6 +13,9 @@ const Login = () => {
   });
 
   const [errorMessage, setErrorMessage] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [resetEmail, setResetEmail] = useState("");
+  const [resetMessage, setResetMessage] = useState({ msg: "", style: {} });
 
   const handleChange = (e) => {
     setCredentials({
@@ -31,6 +35,21 @@ const Login = () => {
 
   const handleClick = () => {
     navigate("/signup");
+  };
+
+  const handleResetPassword = async () => {
+    try {
+      await api.post("auth/users/reset_password/", { email: resetEmail });
+      setResetMessage({
+        msg: "Password reset email sent. Check your inbox.",
+        color: "green",
+      });
+    } catch (error) {
+      setResetMessage({
+        msg: "Failed to send reset email. Please try again.",
+        color: "red",
+      });
+    }
   };
 
   return (
@@ -63,15 +82,54 @@ const Login = () => {
           />
           {errorMessage && <p className="error-message">{errorMessage}</p>}
           <button type="submit">Login</button>
-          <a href="www.google.com" className="forgot-password">
+          <p
+            className="forgot-password"
+            onClick={() => {
+              setIsModalOpen(true);
+            }}
+          >
             Forgot password?
-          </a>
+          </p>
           <hr />
           <button id="sign-up" onClick={handleClick}>
             Sign up
           </button>
         </form>
       </div>
+
+      {isModalOpen && (
+        <div className="modal-overlay">
+          <div className="modal">
+            <h2>Forgot Password</h2>
+            <p>Enter your email address to receive a password reset link:</p>
+            <input
+              type="email"
+              value={resetEmail}
+              onChange={(e) => setResetEmail(e.target.value)}
+              placeholder="Enter your email"
+            />
+            {resetMessage && (
+              <p
+                style={{ color: resetMessage.color }}
+                className="reset-message"
+              >
+                {resetMessage.msg}
+              </p>
+            )}
+            <div className="modal-actions">
+              <button onClick={handleResetPassword}>Send Reset Link</button>
+              <button
+                onClick={() => {
+                  setIsModalOpen(false);
+                  setResetMessage("");
+                }}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

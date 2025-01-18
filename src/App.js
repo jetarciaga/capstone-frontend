@@ -13,6 +13,7 @@ import Navbar from "./components/Navbar";
 import Appointment from "./components/Appointment";
 import UserProfile from "./components/UserProfile";
 import NotFound from "./components/NotFound";
+import ResetPassword from "./components/ResetPassword";
 
 const App = () => {
   const auth = useAuth();
@@ -82,6 +83,8 @@ const App = () => {
         />
 
         <Route path="*" element={<NotFound />} />
+
+        <Route path="/reset/password/:uid/:token" element={<ResetPassword />} />
       </Routes>
 
       {auth.isAuthenticated && <ProfileBar />}

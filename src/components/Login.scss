@@ -7,6 +7,77 @@
   background-size: cover;
   height: 100vh;
 
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+
+  .modal {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 500px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    h2 {
+      font-size: 2em;
+      margin-bottom: 0.5em;
+    }
+    p {
+      font-size: 1.5em;
+    }
+    input {
+      margin-top: 0.5em;
+      padding: 10px;
+      width: 85%;
+      font-size: 16px;
+      border: 1px solid $input-border;
+      border-radius: 5px;
+      font-family: $font-stack;
+
+      &:focus {
+        @include input-focus;
+      }
+    }
+
+    .modal-actions {
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      width: 80%;
+
+      button {
+        padding: 10px;
+        font-size: 1.5em;
+        color: white;
+        background-color: $primary-color;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+          background-color: darken($primary-color, 10%);
+        }
+      }
+    }
+
+    .reset-message {
+      margin-top: 10px;
+    }
+  }
+
   .message {
     align-self: flex-end;
     text-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
@@ -84,12 +155,14 @@
     }
   }
 
-  a {
+  .forgot-password {
     text-decoration: none;
     font-size: 1.2em;
+    color: $secondary-color;
 
     &:hover {
       text-decoration: underline;
+      cursor: pointer;
     }
   }
 
