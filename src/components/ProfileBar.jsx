@@ -9,6 +9,7 @@ const ProfileBar = () => {
   const navigate = useNavigate();
   const { logout, accessToken } = useAuth();
   const [user, setUser] = useState({
+    id: "",
     firstname: "",
     lastname: "",
   }); // State for user data
@@ -23,6 +24,7 @@ const ProfileBar = () => {
         setUser(
           Array.isArray(response.data) ? response.data[0] : response.data
         );
+        console.log(user);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -61,7 +63,9 @@ const ProfileBar = () => {
         </button>
         {isOpen && (
           <ul className="dropdown-menu">
-            <li onClick={() => navigate("/user-profile")}>My Profile</li>
+            <li onClick={() => navigate(`/user-profile/${user.id}`)}>
+              My Profile
+            </li>
             <li onClick={() => logout()}>Logout</li>
           </ul>
         )}
