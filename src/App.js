@@ -1,4 +1,4 @@
-import "./App.css";
+import "./App.scss";
 import Dashboard from "./components/Dashboard";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
