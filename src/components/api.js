@@ -10,57 +10,82 @@ const api = axios.create({
   withCredentials: true,
 });
 
+// ====================================
+// CSRF Token Handling (Prevent Repeated Calls)
+// ====================================
+let csrfTokenFetched = false;
+
 export const fetchCsrfToken = async () => {
-  try {
-    const response = await api.get("api/csrf-token/");
-    const csrfToken = response.data.csrfToken;
-    console.log(csrfToken);
-    axios.defaults.headers.commons["X-CSRFToken"] = csrfToken; // Set globally for axios
-    console.log(axios.defaults.headers);
-  } catch (error) {
-    console.error("Failed to fetch CSRF token:", error);
+  if (!csrfTokenFetched) {
+    try {
+      const response = await api.get("api/csrf-token/");
+      axios.defaults.headers.common["X-CSRFToken"] = response.data.csrfToken;
+      csrfTokenFetched = true;
+      console.log("CSRF Token Set:", response.data.csrfToken);
+    } catch (error) {
+      console.error("Failed to fetch CSRF token:", error);
+    }
   }
 };
 
-const refreshAccessToken = async () => {
-  try {
-    const response = await api.post("api/token/refresh/", {
-      refresh: localStorage.getItem("refreshToken"),
-    });
-    const { access } = response.data;
-    localStorage.setItem("accessToken", access);
-    return access;
-  } catch (error) {
-    console.error("Error refreshing access token", error);
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("refreshToken");
-    throw error;
-  }
-};
-
+// ====================================
+// Axios Request Interceptor
+// ====================================
 api.interceptors.request.use(
-  async (config) => {
-    let token = localStorage.getItem("accessToken");
+  (config) => {
+    const token = localStorage.getItem("accessToken");
 
     if (token) {
       const decoded = jwtDecode(token);
       const currentTime = Date.now() / 1000;
 
+      // ====================================
+      // CHANGED: Remove token refresh logic, clear storage if token is about to expire
+      // ====================================
       if (decoded.exp - currentTime < 60) {
-        try {
-          token = await refreshAccessToken();
-        } catch (error) {
-          console.error("Token refresh failed:", error);
-          throw error;
-        }
+        console.warn("Token expired or about to expire, clearing storage.");
+        localStorage.clear(); // Clear storage instead of refreshing token
+        window.location.href = "/"; // Redirect to login page
+        return Promise.reject(new Error("Token expired, logging out..."));
       }
+
       config.headers.Authorization = `Bearer ${token}`;
     }
+
     return config;
   },
   (error) => {
     return Promise.reject(error);
   }
 );
+
+// ====================================
+// Axios Response Interceptor to Handle Expired Tokens
+// ====================================
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      console.warn(
+        "Unauthorized request, clearing storage and redirecting to login."
+      );
+
+      // ====================================
+      // CHANGED: Clear local storage and redirect upon 401 error
+      // ====================================
+      localStorage.clear(); // Clear all stored data
+      // window.location.href = "/"; // Redirect user to login page
+    }
+    return Promise.reject(error);
+  }
+);
+
+// ====================================
+// Logout Function: Ensures Proper Cleanup
+// ====================================
+export const logout = () => {
+  localStorage.clear(); // CHANGED: Use clear() instead of removing specific items
+  window.location.href = "/"; // Redirect user to login page
+};
 
 export default api;
