@@ -200,3 +200,27 @@
     }
   }
 }
+
+@media (max-width: 480px) {
+  .bg-wrapper {
+    .modal {
+      width: 100%;
+      padding: 10px;
+      h2 {
+        font-size: 1.2em;
+      }
+      p {
+        font-size: 1em;
+      }
+    }
+  }
+
+  .login-container {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column-reverse;
+    row-gap: 2em;
+    margin: 30px 10px;
+    background-size: 200px;
+  }
+}
