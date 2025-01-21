@@ -23,18 +23,25 @@ const Appointment = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const response = await api.post("api/appointments/", formData);
-      console.log("success:", response.data);
-      const reference_no = response.data.data.reference_no;
 
-      MySwal.fire({
-        icon: "success",
-        title: "Schedule successfully created.",
-        showConfirmButton: false,
-        timer: 2000,
-      }).then(() => {
-        api.post("api/email/on_create", {
+    // Confirmation modal before creating appointment
+    const result = await MySwal.fire({
+      title: "Are you sure you want to create an appointment?",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "Yes",
+      cancelButtonText: "No",
+    });
+
+    if (result.isConfirmed) {
+      try {
+        // Proceed with appointment creation
+        const response = await api.post("api/appointments/", formData);
+        console.log("success:", response.data);
+        const reference_no = response.data.data.reference_no;
+
+        // Send email after schedule is created
+        await api.post("api/email/on_create", {
           recipient: user.email,
           reference_number: reference_no,
           user: user.firstname + " " + user.lastname,
@@ -44,23 +51,30 @@ const Appointment = () => {
           date: formData.date,
           requirements,
         });
-        navigate("/dashboard");
-      });
-    } catch (error) {
-      console.error("error:", error);
-      MySwal.fire({
-        icon: "error",
-        title: "Error",
-        text: "Failed to create appointment. Please try again.",
-      });
+
+        // Success modal with both schedule creation and reference number
+        MySwal.fire({
+          icon: "success",
+          title: `Schedule successfully created.`,
+          text: `Appointment with reference number ${reference_no} has been successfully created.`,
+          showCancelButton: false,
+          confirmButtonText: "Close",
+          allowOutsideClick: false, // Prevent closing the modal by clicking outside
+        }).then(() => {
+          // Navigate after the modal is closed
+          navigate("/dashboard");
+        });
+      } catch (error) {
+        console.error("error:", error);
+        MySwal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Failed to create appointment. Please try again.",
+        });
+      }
     }
   };
 
-  // const [appointmentDate, setAppointmentDate] = useState(new Date());
-  // const setAppointmentFromCalendar = useCallback(
-  //   (date) => setAppointmentDate(date).toISOString().slice(0, 10),
-  //   []
-  // );
   const [timeslots, setTimeslots] = useState([]);
   const setTimeslotsFromDate = useCallback(
     (timeslots) => setTimeslots(timeslots.available_slots),
