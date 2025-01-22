@@ -55,7 +55,7 @@ const Signup = () => {
       <h1>
         Barangay <span style={{ fontWeight: 900 }}>Putatan</span>
       </h1>
-      <h2>Online Appointment System</h2>
+      <h2>E-Serbisyo Appointment System</h2>
       <form onSubmit={handleSubmit} className="signup-form">
         <div className="title">
           <h3>Create Account</h3>
