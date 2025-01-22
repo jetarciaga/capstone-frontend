@@ -1,0 +1,55 @@
+@import "../styles/variables/";
+@import "../styles/mixins";
+
+.announcement-container {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+  h1 {
+    font-size: 2.5em;
+  }
+
+  .announcements {
+    display: flex;
+    flex-direction: column;
+    row-gap: 2em;
+    margin-top: 2em;
+    article {
+      header {
+        padding: 0.5em 2em;
+        border: 0.1rem solid $input-border;
+        background-color: $primary-color;
+        border-color: $primary-color;
+        border-radius: 1.5em;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        flex-direction: column;
+        display: flex;
+        color: $light-color;
+        h2 {
+          margin: 0.5em 0 0 0;
+          font-size: 1.75em;
+        }
+        p {
+          font-size: 1.35em;
+          margin: 0.25em 0;
+        }
+      }
+      section {
+        padding: 1em 2em;
+        border: 0.1rem solid $input-border;
+        border-color: $primary-color;
+        border-radius: 1em;
+        border-top-right-radius: 0;
+        border-top-left-radius: 0;
+        font-size: 1.25em;
+        p {
+          line-height: 1.6;
+          span {
+            color: $secondary-color;
+          }
+        }
+      }
+    }
+  }
+}

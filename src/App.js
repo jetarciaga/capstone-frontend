@@ -14,6 +14,7 @@ import Appointment from "./components/Appointment";
 import UserProfile from "./components/UserProfile";
 import NotFound from "./components/NotFound";
 import ResetPassword from "./components/ResetPassword";
+import Announcement from "./components/Announcement";
 
 const App = () => {
   const auth = useAuth();
@@ -78,6 +79,15 @@ const App = () => {
           element={
             <PrivateRoute>
               <UserProfile />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/announcements"
+          element={
+            <PrivateRoute>
+              <Announcement />
             </PrivateRoute>
           }
         />
